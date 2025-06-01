@@ -1,0 +1,93 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f8ff;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 2.5rem;
+}
+
+#timers-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  margin: 40px 0 0 0;
+}
+
+.timer {
+  background: #eaeaff;
+  border: 6px solid #333;
+  border-radius: 40px;
+  padding: 32px 48px 16px 48px;
+  min-width: 420px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+.timer-display {
+  font-size: 6rem;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.1em;
+  color: #111;
+  background: #eef0ff;
+  border-radius: 20px;
+  padding: 0 24px;
+  margin-bottom: 8px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 24px;
+  margin-top: 12px;
+}
+
+.timer-controls button {
+  font-size: 2rem;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s, color 0.2s;
+}
+
+.timer-controls .start {
+  background: linear-gradient(180deg, #00ff44 0%, #00cc22 100%);
+  color: #000;
+}
+
+.timer-controls .clear {
+  background: linear-gradient(180deg, #ff2222 0%, #cc0000 100%);
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .timer {
+    min-width: 90vw;
+    padding: 16px 4vw 8px 4vw;
+  }
+  .timer-display {
+    font-size: 2.5rem;
+    padding: 0 4vw;
+  }
+  #timers-container {
+    gap: 16px;
+  }
+  .timer-controls button {
+    font-size: 1.2rem;
+    padding: 10px 18px;
+    border-radius: 12px;
+  }
+} 
