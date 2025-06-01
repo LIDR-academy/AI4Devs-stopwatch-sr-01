@@ -1,0 +1,166 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f8ff;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 2.5rem;
+}
+
+#timers-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  margin: 40px 0 0 0;
+}
+
+.timer {
+  background: #eaeaff;
+  border: 6px solid #333;
+  border-radius: 40px;
+  padding: 32px 48px 16px 48px;
+  min-width: 420px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+.timer-display {
+  font-size: 6rem;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.1em;
+  color: #111;
+  background: #eef0ff;
+  border-radius: 20px;
+  padding: 0 24px;
+  margin-bottom: 8px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 24px;
+  margin-top: 12px;
+}
+
+.timer-controls button {
+  font-size: 2rem;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s, color 0.2s;
+}
+
+.timer-controls .start {
+  background: linear-gradient(180deg, #00ff44 0%, #00cc22 100%);
+  color: #000;
+}
+
+.timer-controls .clear {
+  background: linear-gradient(180deg, #ff2222 0%, #cc0000 100%);
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .timer {
+    min-width: 90vw;
+    padding: 16px 4vw 8px 4vw;
+  }
+  .timer-display {
+    font-size: 2.5rem;
+    padding: 0 4vw;
+  }
+  #timers-container {
+    gap: 16px;
+  }
+  .timer-controls button {
+    font-size: 1.2rem;
+    padding: 10px 18px;
+    border-radius: 12px;
+  }
+}
+
+/* Add styles for the add-timer buttons */
+#add-timer-controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+#add-stopwatch, #add-countdown {
+  font-size: 2rem;
+  padding: 20px 40px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  transition: background 0.2s, transform 0.1s;
+}
+#add-stopwatch {
+  background: linear-gradient(180deg, #00ff44 0%, #00cc22 100%);
+  color: #000;
+}
+#add-stopwatch:hover {
+  background: linear-gradient(180deg, #00e63b 0%, #00991a 100%);
+  transform: scale(1.05);
+}
+#add-countdown {
+  background: linear-gradient(180deg, #448aff 0%, #0057e7 100%);
+  color: #fff;
+}
+#add-countdown:hover {
+  background: linear-gradient(180deg, #2979ff 0%, #003cb3 100%);
+  transform: scale(1.05);
+}
+
+/* Style countdown timer input fields */
+.timer input[type="number"] {
+  font-size: 2.2rem;
+  text-align: center;
+  border: 2px solid #888;
+  border-radius: 10px;
+  width: 3.5em;
+  margin: 0 2px;
+  background: #f4f8ff;
+  color: #222;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.timer input[type="number"]:focus {
+  border: 2px solid #448aff;
+  box-shadow: 0 0 6px #448aff44;
+}
+.timer input[type="number"]:disabled {
+  background: #e0e0e0;
+  color: #aaa;
+  border: 2px solid #ccc;
+}
+
+/* Improve the layout of the countdown input group */
+.timer > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+/* Add a label style for clarity if needed */
+.timer .countdown-label {
+  font-size: 1.1rem;
+  color: #555;
+  margin-right: 8px;
+} 
