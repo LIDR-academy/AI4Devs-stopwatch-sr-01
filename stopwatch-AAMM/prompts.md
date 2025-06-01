@@ -47,3 +47,5 @@ muestrame los archovs, adicional al configurar el cronometro solo permite selcci
 ahora todo esta en orden con excepcion del sonido este no se reproduce ya que en el console log indica que la ruta esta prohibida
 # Sexto Prompt
 a los cronometros agregales un icono de eliminar para eliminarlos del dom
+
+el ultimo prompt fue mas ya agregando la ultima funcionalidad que al inicio no agregamos
