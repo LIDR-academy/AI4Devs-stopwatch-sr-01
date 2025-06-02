@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timer and Countdown - QA Testing Version</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.qa-panel {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.qa-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #FFD700;
+    text-align: center;
+}
+
+.test-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.test-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.test-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.test-case {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #4CAF50;
+    transition: all 0.3s ease;
+}
+
+.test-case.failed {
+    border-left-color: #f44336;
+    background: rgba(244, 67, 54, 0.1);
+}
+
+.test-case.warning {
+    border-left-color: #ff9800;
+    background: rgba(255, 152, 0, 0.1);
+}
+
+.test-case.running {
+    border-left-color: #2196F3;
+    background: rgba(33, 150, 243, 0.1);
+    animation: pulse 1s infinite;
+}
+
+.test-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.test-details {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.test-time {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.controls {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.add-timer-btn, .add-countdown-btn, .qa-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.add-countdown-btn {
+    background: #2196F3;
+}
+
+.qa-btn {
+    background: #FF9800;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+.qa-btn.danger {
+    background: #f44336;
+}
+
+.qa-btn.success {
+    background: #4CAF50;
+}
+
+.add-timer-btn:hover, .add-countdown-btn:hover, .qa-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.timers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.timer-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    text-align: center;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.timer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.timer-type {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.delete-btn {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: #ff3742;
+    transform: scale(1.05);
+}
+
+.display {
+    background: linear-gradient(145deg, #e8e8e8, #f5f5f5);
+    border: 3px solid #333;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.time-display {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+.milliseconds {
+    font-size: 1.5rem;
+    color: #666;
+}
+
+.countdown-inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.time-input {
+    text-align: center;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    background: rgba(255,255,255,0.9);
+}
+
+.time-input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.controls-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 80px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.start-btn {
+    background: linear-gradient(145deg, #4CAF50, #45a049);
+    color: white;
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+.pause-btn {
+    background: linear-gradient(145deg, #ff9800, #f57c00);
+    color: white;
+}
+
+.pause-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+.stop-btn {
+    background: linear-gradient(145deg, #f44336, #d32f2f);
+    color: white;
+}
+
+.stop-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+.reset-btn {
+    background: linear-gradient(145deg, #607d8b, #546e7a);
+    color: white;
+}
+
+.reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #4CAF50;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.countdown-finished {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #4CAF50;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    animation: progressAnimation 2s ease-in-out;
+}
+
+@keyframes progressAnimation {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .time-display {
+        font-size: 2rem;
+    }
+    
+    .milliseconds {
+        font-size: 1rem;
+    }
+    
+    .control-btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        min-width: 70px;
+    }
+    
+    .test-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .qa-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+</style>
+</head>
+<body>
+<h1>Timer and Countdown - QA Testing Version</h1>
+
+<div class="qa-panel">
+    <div class="qa-title">🧪 QA Testing Dashboard</div>
+    
+    <div class="test-stats">
+        <div class="stat-card">
+            <div class="stat-number" id="totalTests">0</div>
+            <div class="stat-label">Total Tests</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="passedTests">0</div>
+            <div class="stat-label">Passed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="failedTests">0</div>
+            <div class="stat-label">Failed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="warningTests">0</div>
+            <div class="stat-label">Warnings</div>
+        </div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="testProgress" style="width: 0%;"></div>
+    </div>
+    
+    <div class="test-controls">
+        <button class="qa-btn" onclick="runFunctionalTests()">🔧 Functional Tests</button>
+        <button class="qa-btn" onclick="runStressTests()">⚡ Stress Tests</button>
+        <button class="qa-btn" onclick="runEdgeCaseTests()">🚨 Edge Cases</button>
+        <button class="qa-btn success" onclick="runAllTests()">🚀 Run All Tests</button>
+        <button class="qa-btn danger" onclick="clearTestResults()">🗑️ Clear Results</button>
+        <button class="qa-btn" onclick="exportTestResults()">📊 Export Report</button>
+    </div>
+    
+    <div id="testResults" class="test-results"></div>
+</div>
+
+<div class="controls">
+    <button class="add-timer-btn" onclick="addTimer()">Add Stopwatch</button>
+    <button class="add-countdown-btn" onclick="addCountdown()">Add Countdown</button>
+</div>
+
+<div class="timers-container" id="timersContainer">
+</div>
+
+<script>
+class QATimerManager {
+    constructor() {
+        this.timers = new Map();
+        this.nextId = 1;
+        this.audioContext = null;
+        this.testResults = [];
+        this.currentTestSuite = '';
+        this.totalTestsPlanned = 0;
+        this.testsCompleted = 0;
+        this.initAudioContext();
+    }
+
+    async initAudioContext() {
+        try {
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (error) {
+            console.warn('Audio context not available:', error);
+        }
+    }
+
+    playAlertSound() {
+        if (!this.audioContext) return;
+
+        try {
+            const oscillator = this.audioContext.createOscillator();
+            const gainNode = this.audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, this.audioContext.currentTime);
+            oscillator.frequency.setValueAtTime(600, this.audioContext.currentTime + 0.1);
+            oscillator.frequency.setValueAtTime(800, this.audioContext.currentTime + 0.2);
+            
+            gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, this.audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.5);
+            
+            oscillator.start(this.audioContext.currentTime);
+            oscillator.stop(this.audioContext.currentTime + 0.5);
+        } catch (error) {
+            console.warn('Could not play alert sound:', error);
+        }
+    }
+
+    showNotification(message) {
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('Timer Alert', {
+                body: message,
+                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23f44336"/><text x="50" y="60" text-anchor="middle" fill="white" font-size="40">⏰</text></svg>'
+            });
+        }
+
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+
+    logTestResult(testName, passed, details = '', severity = 'normal') {
+        const result = {
+            name: testName,
+            passed: passed,
+            details: details,
+            severity: severity,
+            timestamp: new Date().toLocaleTimeString(),
+            suite: this.currentTestSuite
+        };
+        
+        this.testResults.push(result);
+        this.testsCompleted++;
+        this.updateTestDisplay();
+        this.updateProgress();
+        
+        // Log to console for debugging
+        console.log(`${passed ? '✅' : '❌'} ${testName}: ${details}`);
+    }
+
+    updateTestDisplay() {
+        const resultsDiv = document.getElementById('testResults');
+        const latest = this.testResults.slice(-10); // Show last 10 tests
+        
+        resultsDiv.innerHTML = latest.map(result => `
+            <div class="test-case ${result.passed ? (result.severity === 'warning' ? 'warning' : '') : 'failed'}">
+                <div class="test-name">
+                    ${result.passed ? (result.severity === 'warning' ? '⚠️' : '✅') : '❌'} 
+                    ${result.name}
+                </div>
+                <div class="test-details">${result.details}</div>
+                <div class="test-time">Suite: ${result.suite} | Time: ${result.timestamp}</div>
+            </div>
+        `).join('');
+
+        // Update stats
+        const total = this.testResults.length;
+        const passed = this.testResults.filter(r => r.passed && r.severity !== 'warning').length;
+        const failed = this.testResults.filter(r => !r.passed).length;
+        const warnings = this.testResults.filter(r => r.passed && r.severity === 'warning').length;
+
+        document.getElementById('totalTests').textContent = total;
+        document.getElementById('passedTests').textContent = passed;
+        document.getElementById('failedTests').textContent = failed;
+        document.getElementById('warningTests').textContent = warnings;
+    }
+
+    updateProgress() {
+        if (this.totalTestsPlanned > 0) {
+            const progress = (this.testsCompleted / this.totalTestsPlanned) * 100;
+            document.getElementById('testProgress').style.width = `${Math.min(progress, 100)}%`;
+        }
+    }
+
+    createTimer(type) {
+        const id = this.nextId++;
+        const timer = {
+            id,
+            type,
+            startTime: 0,
+            elapsedTime: 0,
+            isRunning: false,
+            interval: null,
+            targetTime: type === 'countdown' ? 60000 : 0
+        };
+
+        this.timers.set(id, timer);
+        this.renderTimer(timer);
+        return timer;
+    }
+
+    deleteTimer(id) {
+        const timer = this.timers.get(id);
+        if (timer) {
+            this.stopTimer(id);
+            this.timers.delete(id);
+            const element = document.getElementById(`timer-${id}`);
+            if (element) element.remove();
+        }
+    }
+
+    startTimer(id) {
+        const timer = this.timers.get(id);
+        if (!timer || timer.isRunning) return;
+
+        timer.isRunning = true;
+        timer.startTime = Date.now() - timer.elapsedTime;
+
+        timer.interval = setInterval(() => {
+            if (timer.type === 'stopwatch') {
+                timer.elapsedTime = Date.now() - timer.startTime;
+            } else {
+                timer.elapsedTime = Date.now() - timer.startTime;
+                const remaining = timer.targetTime - timer.elapsedTime;
+                
+                if (remaining <= 0) {
+                    this.stopTimer(id);
+                    timer.elapsedTime = timer.targetTime;
+                    this.onCountdownFinished(id);
+                }
+            }
+            this.updateDisplay(timer);
+        }, 10);
+
+        this.updateButtons(timer);
+    }
+
+    pauseTimer(id) {
+        const timer = this.timers.get(id);
+        if (!timer || !timer.isRunning) return;
+
+        timer.isRunning = false;
+        clearInterval(timer.interval);
+        this.updateButtons(timer);
+    }
+
+    stopTimer(id) {
+        const timer = this.timers.get(id);
+        if (!timer) return;
+
+        timer.isRunning = false;
+        clearInterval(timer.interval);
+        this.updateButtons(timer);
+    }
+
+    resetTimer(id) {
+        const timer = this.timers.get(id);
+        if (!timer) return;
+
+        this.stopTimer(id);
+        timer.elapsedTime = 0;
+        this.updateDisplay(timer);
+        
+        const card = document.getElementById(`timer-${id}`);
+        if (card) card.classList.remove('countdown-finished');
+    }
+
+    onCountdownFinished(id) {
+        const timer = this.timers.get(id);
+        const card = document.getElementById(`timer-${id}`);
+        
+        if (card) card.classList.add('countdown-finished');
+        this.playAlertSound();
+        this.showNotification('Countdown finished!');
+    }
+
+    setCountdownTime(id, hours, minutes, seconds) {
+        const timer = this.timers.get(id);
+        if (!timer || timer.type !== 'countdown') return;
+
+        timer.targetTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
+        this.updateDisplay(timer);
+    }
+
+    formatTime(milliseconds, showMillis = true) {
+        const totalSeconds = Math.floor(milliseconds / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        const millis = Math.floor((milliseconds % 1000) / 10);
+
+        const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (showMillis) {
+            return { timeStr, millis: millis.toString().padStart(2, '0') };
+        }
+        return { timeStr, millis: '00' };
+    }
+
+    updateDisplay(timer) {
+        const displayTime = timer.type === 'countdown' 
+            ? Math.max(0, timer.targetTime - timer.elapsedTime)
+            : timer.elapsedTime;
+
+        const { timeStr, millis } = this.formatTime(displayTime);
+        
+        const timeDisplay = document.querySelector(`#timer-${timer.id} .time-display`);
+        const millisDisplay = document.querySelector(`#timer-${timer.id} .milliseconds`);
+        
+        if (timeDisplay) timeDisplay.textContent = timeStr;
+        if (millisDisplay) millisDisplay.textContent = millis;
+    }
+
+    updateButtons(timer) {
+        const startBtn = document.querySelector(`#timer-${timer.id} .start-btn`);
+        const pauseBtn = document.querySelector(`#timer-${timer.id} .pause-btn`);
+        
+        if (startBtn) startBtn.style.display = timer.isRunning ? 'none' : 'inline-block';
+        if (pauseBtn) pauseBtn.style.display = timer.isRunning ? 'inline-block' : 'none';
+    }
+
+    renderTimer(timer) {
+        const container = document.getElementById('timersContainer');
+        const card = document.createElement('div');
+        card.className = 'timer-card';
+        card.id = `timer-${timer.id}`;
+
+        const { timeStr, millis } = this.formatTime(
+            timer.type === 'countdown' ? timer.targetTime : 0
+        );
+
+        card.innerHTML = `
+            <div class="timer-header">
+                <div class="timer-type">${timer.type === 'stopwatch' ? 'Stopwatch' : 'Countdown'} #${timer.id}</div>
+                <button class="delete-btn" onclick="timerManager.deleteTimer(${timer.id})">Delete</button>
+            </div>
+            
+            <div class="display">
+                <div class="time-display">${timeStr}</div>
+                <div class="milliseconds">${millis}</div>
+            </div>
+
+            ${timer.type === 'countdown' ? `
+                <div class="countdown-inputs">
+                    <input type="number" class="time-input" placeholder="Hours" min="0" max="23" value="0" 
+                           onchange="updateCountdownTime(${timer.id})">
+                    <input type="number" class="time-input" placeholder="Minutes" min="0" max="59" value="1" 
+                           onchange="updateCountdownTime(${timer.id})">
+                    <input type="number" class="time-input" placeholder="Seconds" min="0" max="59" value="0" 
+                           onchange="updateCountdownTime(${timer.id})">
+                </div>
+            ` : ''}
+
+            <div class="controls-buttons">
+                <button class="control-btn start-btn" onclick="timerManager.startTimer(${timer.id})">Start</button>
+                <button class="control-btn pause-btn" onclick="timerManager.pauseTimer(${timer.id})" style="display: none;">Pause</button>
+                <button class="control-btn stop-btn" onclick="timerManager.stopTimer(${timer.id})">Stop</button>
+                <button class="control-btn reset-btn" onclick="timerManager.resetTimer(${timer.id})">Reset</button>
+            </div>
+        `;
+
+        container.appendChild(card);
+
+        if (timer.type === 'countdown') {
+            updateCountdownTime(timer.id);
+        }
+    }
+
+    // Test validation methods
+    validateTimerExists(id) {
+        return this.timers.has(id) && document.getElementById(`timer-${id}`) !== null;
+    }
+
+    validateTimerState(id, expectedState) {
+        const timer = this.timers.get(id);
+        return timer && timer.isRunning === expectedState;
+    }
+
+    validateTimeFormat(timeString) {
+        const timeRegex = /^\d{2}:\d{2}:\d{2}$/;
+        return timeRegex.test(timeString);
+    }
+
+    async sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+}
+
+// Global instance
+const timerManager = new QATimerManager();
+
+// Request notification permission
+if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+}
+
+function addTimer() {
+    timerManager.createTimer('stopwatch');
+}
+
+function addCountdown() {
+    timerManager.createTimer('countdown');
+}
+
+function updateCountdownTime(id) {
+    const card = document.getElementById(`timer-${id}`);
+    if (!card) return;
+    
+    const inputs = card.querySelectorAll('.time-input');
+    const hours = parseInt(inputs[0].value) || 0;
+    const minutes = parseInt(inputs[1].value) || 0;
+    const seconds = parseInt(inputs[2].value) || 0;
+    
+    timerManager.setCountdownTime(id, hours, minutes, seconds);
+}
+
+// QA Testing Functions
+async function runFunctionalTests() {
+    timerManager.currentTestSuite = 'Functional';
+    timerManager.totalTestsPlanned = 8;
+    timerManager.testsCompleted = 0;
+    
+    // Test 1: Create stopwatch
+    try {
+        const timer = timerManager.createTimer('stopwatch');
+        const exists = timerManager.validateTimerExists(timer.id);
+        timerManager.logTestResult('TC001 - Create Stopwatch', exists, 
+            `Timer ${timer.id} created: ${exists ? 'SUCCESS' : 'FAILED'}`);
+    } catch (error) {
+        timerManager.logTestResult('TC001 - Create Stopwatch', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 2: Create countdown
+    try {
+        const timer = timerManager.createTimer('countdown');
+        const exists = timerManager.validateTimerExists(timer.id);
+        timerManager.logTestResult('TC002 - Create Countdown', exists, 
+            `Countdown ${timer.id} created: ${exists ? 'SUCCESS' : 'FAILED'}`);
+    } catch (error) {
+        timerManager.logTestResult('TC002 - Create Countdown', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 3: Start timer functionality
+    try {
+        const timers = Array.from(timerManager.timers.values());
+        if (timers.length > 0) {
+            const testTimer = timers[0];
+            timerManager.startTimer(testTimer.id);
+            const isRunning = timerManager.validateTimerState(testTimer.id, true);
+            timerManager.logTestResult('TC003 - Start Timer', isRunning, 
+                `Timer ${testTimer.id} started: ${isRunning ? 'SUCCESS' : 'FAILED'}`);
+        } else {
+            timerManager.logTestResult('TC003 - Start Timer', false, 'No timers available for testing');
+        }
+    } catch (error) {
+        timerManager.logTestResult('TC003 - Start Timer', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(200);
+
+    // Test 4: Pause timer functionality
+    try {
+        const timers = Array.from(timerManager.timers.values());
+        const runningTimer = timers.find(t => t.isRunning);
+        if (runningTimer) {
+            timerManager.pauseTimer(runningTimer.id);
+            const isPaused = timerManager.validateTimerState(runningTimer.id, false);
+            timerManager.logTestResult('TC004 - Pause Timer', isPaused, 
+                `Timer ${runningTimer.id} paused: ${isPaused ? 'SUCCESS' : 'FAILED'}`);
+        } else {
+            timerManager.logTestResult('TC004 - Pause Timer', false, 'No running timer found');
+        }
+    } catch (error) {
+        timerManager.logTestResult('TC004 - Pause Timer', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 5: Time formatting
+    try {
+        const formatted = timerManager.formatTime(3661000); // 1h 1m 1s
+        const isValid = formatted.timeStr === '01:01:01' && timerManager.validateTimeFormat(formatted.timeStr);
+        timerManager.logTestResult('TC005 - Time Formatting', isValid, 
+            `Expected: 01:01:01, Got: ${formatted.timeStr}, Valid format: ${timerManager.validateTimeFormat(formatted.timeStr)}`);
+    } catch (error) {
+        timerManager.logTestResult('TC005 - Time Formatting', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 6: Reset timer
+    try {
+        const timers = Array.from(timerManager.timers.values());
+        if (timers.length > 0) {
+            const testTimer = timers[0];
+            timerManager.resetTimer(testTimer.id);
+            const isReset = testTimer.elapsedTime === 0 && !testTimer.isRunning;
+            timerManager.logTestResult('TC006 - Reset Timer', isReset, 
+                `Timer ${testTimer.id} reset - Elapsed: ${testTimer.elapsedTime}, Running: ${testTimer.isRunning}`);
+        }
+    } catch (error) {
+        timerManager.logTestResult('TC006 - Reset Timer', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 7: Countdown configuration
+    try {
+        const countdowns = Array.from(timerManager.timers.values()).filter(t => t.type === 'countdown');
+        if (countdowns.length > 0) {
+            const testCountdown = countdowns[0];
+            timerManager.setCountdownTime(testCountdown.id, 0, 2, 30); // 2m 30s
+            const expectedTime = 150000; // 2.5 minutes in ms
+            const isConfigured = testCountdown.targetTime === expectedTime;
+            timerManager.logTestResult('TC007 - Countdown Configuration', isConfigured, 
+                `Expected: ${expectedTime}ms, Got: ${testCountdown.targetTime}ms`);
+        } else {
+            timerManager.logTestResult('TC007 - Countdown Configuration', false, 'No countdown timer available');
+        }
+    } catch (error) {
+        timerManager.logTestResult('TC007 - Countdown Configuration', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 8: Delete timer
+    try {
+        const timers = Array.from(timerManager.timers.values());
+        if (timers.length > 0) {
+            const testTimer = timers[0];
+            const initialCount = timerManager.timers.size;
+            timerManager.deleteTimer(testTimer.id);
+            const finalCount = timerManager.timers.size;
+            const elementRemoved = !document.getElementById(`timer-${testTimer.id}`);
+            const deleted = finalCount < initialCount && elementRemoved;
+            timerManager.logTestResult('TC008 - Delete Timer', deleted, 
+                `Initial: ${initialCount}, Final: ${finalCount}, Element removed: ${elementRemoved}`);
+        }
+    } catch (error) {
+        timerManager.logTestResult('TC008 - Delete Timer', false, `Error: ${error.message}`);
+    }
+}
+
+async function runStressTests() {
+    timerManager.currentTestSuite = 'Stress';
+    timerManager.totalTestsPlanned = 5;
+    timerManager.testsCompleted = 0;
+
+    // Test 1: Multiple timers creation
+    try {
+        const initialCount = timerManager.timers.size;
+        const timersToCreate = 15;
+        
+        for (let i = 0; i < timersToCreate; i++) {
+            timerManager.createTimer(i % 2 === 0 ? 'stopwatch' : 'countdown');
+        }
+        
+        const finalCount = timerManager.timers.size;
+        const created = finalCount === initialCount + timersToCreate;
+        const severity = timersToCreate > 10 ? 'warning' : 'normal';
+        
+        timerManager.logTestResult('ST001 - Multiple Timers Creation', created, 
+            `Created ${timersToCreate} timers: Initial ${initialCount}, Final ${finalCount}`, severity);
+    } catch (error) {
+        timerManager.logTestResult('ST001 - Multiple Timers Creation', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(200);
+
+    // Test 2: Rapid start/stop operations
+    try {
+        const timers = Array.from(timerManager.timers.values()).slice(0, 8);
+        let successCount = 0;
+        let operationCount = 0;
+        
+        for (const timer of timers) {
+            try {
+                timerManager.startTimer(timer.id);
+                operationCount++;
+                await timerManager.sleep(10);
+                
+                timerManager.pauseTimer(timer.id);
+                operationCount++;
+                await timerManager.sleep(10);
+                
+                timerManager.startTimer(timer.id);
+                operationCount++;
+                await timerManager.sleep(10);
+                
+                timerManager.stopTimer(timer.id);
+                operationCount++;
+                successCount += 4;
+            } catch (e) {
+                console.warn(`Rapid operation failed for timer ${timer.id}:`, e);
+            }
+        }
+        
+        const successRate = (successCount / operationCount) * 100;
+        const passed = successRate >= 90;
+        const severity = successRate < 95 ? 'warning' : 'normal';
+        
+        timerManager.logTestResult('ST002 - Rapid Start/Stop Operations', passed, 
+            `Success rate: ${successRate.toFixed(1)}% (${successCount}/${operationCount})`, severity);
+    } catch (error) {
+        timerManager.logTestResult('ST002 - Rapid Start/Stop Operations', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(200);
+
+    // Test 3: Memory leak detection
+    try {
+        const initialTimerCount = timerManager.timers.size;
+        const tempTimers = [];
+        
+        // Create and immediately delete timers
+        for (let i = 0; i < 10; i++) {
+            const timer = timerManager.createTimer('stopwatch');
+            tempTimers.push(timer.id);
+        }
+        
+        // Delete all temp timers
+        tempTimers.forEach(id => timerManager.deleteTimer(id));
+        
+        const finalTimerCount = timerManager.timers.size;
+        const noMemoryLeak = finalTimerCount === initialTimerCount;
+        
+        timerManager.logTestResult('ST003 - Memory Leak Detection', noMemoryLeak, 
+            `Initial: ${initialTimerCount}, After create/delete cycle: ${finalTimerCount}`);
+    } catch (error) {
+        timerManager.logTestResult('ST003 - Memory Leak Detection', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 4: Performance under load
+    try {
+        const startTime = performance.now();
+        const timers = Array.from(timerManager.timers.values()).slice(0, 10);
+        
+        // Start all timers simultaneously
+        timers.forEach(timer => timerManager.startTimer(timer.id));
+        
+        // Let them run for a bit
+        await timerManager.sleep(500);
+        
+        // Stop all timers
+        timers.forEach(timer => timerManager.stopTimer(timer.id));
+        
+        const endTime = performance.now();
+        const totalTime = endTime - startTime;
+        const performanceGood = totalTime < 1000; // Should complete in under 1 second
+        const severity = totalTime > 800 ? 'warning' : 'normal';
+        
+        timerManager.logTestResult('ST004 - Performance Under Load', performanceGood, 
+            `${timers.length} concurrent timers test completed in ${totalTime.toFixed(2)}ms`, severity);
+    } catch (error) {
+        timerManager.logTestResult('ST004 - Performance Under Load', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 5: DOM element count validation
+    try {
+        const timerCardsInDOM = document.querySelectorAll('.timer-card').length;
+        const timersInMemory = timerManager.timers.size;
+        const domSynced = timerCardsInDOM === timersInMemory;
+        
+        timerManager.logTestResult('ST005 - DOM Synchronization', domSynced, 
+            `DOM elements: ${timerCardsInDOM}, Memory objects: ${timersInMemory}`);
+    } catch (error) {
+        timerManager.logTestResult('ST005 - DOM Synchronization', false, `Error: ${error.message}`);
+    }
+}
+
+async function runEdgeCaseTests() {
+    timerManager.currentTestSuite = 'Edge Cases';
+    timerManager.totalTestsPlanned = 7;
+    timerManager.testsCompleted = 0;
+
+    // Test 1: Invalid countdown values
+    try {
+        const timer = timerManager.createTimer('countdown');
+        timerManager.setCountdownTime(timer.id, -1, 70, -10);
+        
+        // The app should handle invalid values gracefully
+        const targetTime = timer.targetTime;
+        const handledGracefully = targetTime >= 0;
+        
+        timerManager.logTestResult('EC001 - Invalid Countdown Values', handledGracefully, 
+            `Negative/invalid inputs resulted in: ${targetTime}ms (should be >= 0)`);
+    } catch (error) {
+        timerManager.logTestResult('EC001 - Invalid Countdown Values', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 2: Zero countdown
+    try {
+        const timer = timerManager.createTimer('countdown');
+        timerManager.setCountdownTime(timer.id, 0, 0, 0);
+        timerManager.startTimer(timer.id);
+        
+        await timerManager.sleep(100);
+        
+        const completedImmediately = !timer.isRunning && timer.elapsedTime >= timer.targetTime;
+        
+        timerManager.logTestResult('EC002 - Zero Countdown', completedImmediately, 
+            `Zero countdown - Running: ${timer.isRunning}, Elapsed: ${timer.elapsedTime}, Target: ${timer.targetTime}`);
+    } catch (error) {
+        timerManager.logTestResult('EC002 - Zero Countdown', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 3: Very large time values
+    try {
+        const timer = timerManager.createTimer('countdown');
+        const largeHours = 99;
+        const largeMinutes = 59;
+        const largeSeconds = 59;
+        
+        timerManager.setCountdownTime(timer.id, largeHours, largeMinutes, largeSeconds);
+        
+        const expectedMs = (largeHours * 3600 + largeMinutes * 60 + largeSeconds) * 1000;
+        const handledLargeValues = timer.targetTime === expectedMs;
+        
+        timerManager.logTestResult('EC003 - Large Time Values', handledLargeValues, 
+            `99:59:59 = Expected: ${expectedMs}ms, Got: ${timer.targetTime}ms`);
+    } catch (error) {
+        timerManager.logTestResult('EC003 - Large Time Values', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 4: Rapid delete operations
+    try {
+        const timersToCreate = 5;
+        const createdIds = [];
+        
+        // Create timers
+        for (let i = 0; i < timersToCreate; i++) {
+            const timer = timerManager.createTimer('stopwatch');
+            createdIds.push(timer.id);
+        }
+        
+        // Rapidly delete them
+        let deleteErrors = 0;
+        createdIds.forEach(id => {
+            try {
+                timerManager.deleteTimer(id);
+            } catch (e) {
+                deleteErrors++;
+            }
+        });
+        
+        const successfulDeletes = timersToCreate - deleteErrors;
+        const handledRapidDeletes = deleteErrors === 0;
+        
+        timerManager.logTestResult('EC004 - Rapid Delete Operations', handledRapidDeletes, 
+            `${successfulDeletes}/${timersToCreate} deletes successful, ${deleteErrors} errors`);
+    } catch (error) {
+        timerManager.logTestResult('EC004 - Rapid Delete Operations', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 5: Notification system availability
+    try {
+        const notificationSupported = 'Notification' in window;
+        const permission = Notification.permission;
+        
+        if (notificationSupported) {
+            timerManager.showNotification('QA Test notification');
+        }
+        
+        const severity = !notificationSupported || permission === 'denied' ? 'warning' : 'normal';
+        
+        timerManager.logTestResult('EC005 - Notification System', notificationSupported, 
+            `Browser support: ${notificationSupported}, Permission: ${permission}`, severity);
+    } catch (error) {
+        timerManager.logTestResult('EC005 - Notification System', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 6: Audio context availability
+    try {
+        const audioSupported = timerManager.audioContext !== null;
+        const audioContextState = timerManager.audioContext ? timerManager.audioContext.state : 'unavailable';
+        
+        if (audioSupported) {
+            try {
+                timerManager.playAlertSound();
+            } catch (audioError) {
+                console.warn('Audio playback test failed:', audioError);
+            }
+        }
+        
+        const severity = !audioSupported ? 'warning' : 'normal';
+        
+        timerManager.logTestResult('EC006 - Audio Alert System', audioSupported, 
+            `Audio context: ${audioSupported ? 'Available' : 'Unavailable'}, State: ${audioContextState}`, severity);
+    } catch (error) {
+        timerManager.logTestResult('EC006 - Audio Alert System', false, `Error: ${error.message}`);
+    }
+
+    await timerManager.sleep(100);
+
+    // Test 7: Browser compatibility features
+    try {
+        const features = {
+            localStorage: typeof(Storage) !== 'undefined',
+            promises: typeof Promise !== 'undefined',
+            setInterval: typeof setInterval !== 'undefined',
+            audioContext: typeof(AudioContext || webkitAudioContext) !== 'undefined',
+            requestAnimationFrame: typeof requestAnimationFrame !== 'undefined'
+        };
+        
+        const supportedFeatures = Object.values(features).filter(Boolean).length;
+        const totalFeatures = Object.keys(features).length;
+        const compatibilityScore = (supportedFeatures / totalFeatures) * 100;
+        
+        const highCompatibility = compatibilityScore >= 80;
+        const severity = compatibilityScore < 90 ? 'warning' : 'normal';
+        
+        timerManager.logTestResult('EC007 - Browser Compatibility', highCompatibility, 
+            `Compatibility score: ${compatibilityScore.toFixed(1)}% (${supportedFeatures}/${totalFeatures} features)`, severity);
+    } catch (error) {
+        timerManager.logTestResult('EC007 - Browser Compatibility', false, `Error: ${error.message}`);
+    }
+}
+
+async function runAllTests() {
+    // Clear previous results
+    timerManager.testResults = [];
+    timerManager.totalTestsPlanned = 20; // Total from all suites
+    timerManager.testsCompleted = 0;
+    
+    // Reset progress bar
+    document.getElementById('testProgress').style.width = '0%';
+    
+    console.log('🚀 Starting comprehensive QA test suite...');
+    
+    await runFunctionalTests();
+    await timerManager.sleep(500);
+    
+    await runStressTests();
+    await timerManager.sleep(500);
+    
+    await runEdgeCaseTests();
+    
+    // Final summary
+    setTimeout(() => {
+        const total = timerManager.testResults.length;
+        const passed = timerManager.testResults.filter(r => r.passed && r.severity !== 'warning').length;
+        const failed = timerManager.testResults.filter(r => !r.passed).length;
+        const warnings = timerManager.testResults.filter(r => r.passed && r.severity === 'warning').length;
+        
+        console.log(`\n📊 QA Test Summary:`);
+        console.log(`Total Tests: ${total}`);
+        console.log(`✅ Passed: ${passed}`);
+        console.log(`❌ Failed: ${failed}`);
+        console.log(`⚠️ Warnings: ${warnings}`);
+        console.log(`Success Rate: ${((passed / total) * 100).toFixed(1)}%`);
+        
+        // Show completion notification
+        timerManager.showNotification(`QA Tests Complete! ${passed}/${total} passed`);
+    }, 1000);
+}
+
+function clearTestResults() {
+    timerManager.testResults = [];
+    timerManager.testsCompleted = 0;
+    timerManager.totalTestsPlanned = 0;
+    timerManager.updateTestDisplay();
+    document.getElementById('testProgress').style.width = '0%';
+    console.log('🗑️ Test results cleared');
+}
+
+function exportTestResults() {
+    const results = timerManager.testResults;
+    const timestamp = new Date().toISOString();
+    
+    const report = {
+        timestamp: timestamp,
+        summary: {
+            total: results.length,
+            passed: results.filter(r => r.passed && r.severity !== 'warning').length,
+            failed: results.filter(r => !r.passed).length,
+            warnings: results.filter(r => r.passed && r.severity === 'warning').length
+        },
+        tests: results
+    };
+    
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `qa-test-report-${timestamp.slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    console.log('📊 Test report exported');
+}
+
+// Add initial timers for testing
+addTimer();
+addCountdown();
+
+// Auto-run a basic test on load
+setTimeout(() => {
+    console.log('🔧 Running initial functionality check...');
+    runFunctionalTests();
+}, 1000);
+</script>
+</body>
+</html>
