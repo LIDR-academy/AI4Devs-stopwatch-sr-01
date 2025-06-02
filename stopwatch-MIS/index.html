@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Stopwatch Clone</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 951px;
+      background-color: white;
+    }
+    .bar {
+      background-color: #0033a0;
+      color: white;
+      width: 100%;
+      text-align: center;
+      font-size: 1.2em;
+      padding: 10px 5px;
+      position: relative;
+      height: 60px;
+      display: flex;
+      align-items: center;
+    }
+    .main-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 961px;
+    }
+    .choice-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      margin: 20px 0;
+    }
+    .choice {
+      width: 220px;
+      height: 220px;
+      border: 2px solid #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin: 0.7rem;
+    }
+    .choice:hover {
+      background-color: #ccffcc;
+    }
+    .choice img {
+      width: 100px;
+      height: 100px;
+    }
+    .timer-display {
+      font-size: 80px;
+      margin: 20px;
+      font-weight: bold;
+      background-color: #f0f0f0;
+      padding: 20px;
+      border: 3px solid #999;
+      border-radius: 10px;
+      position: relative;
+      width: 600px;
+      text-align: center;
+    }
+    .millis {
+      font-size: 26px;
+      position: absolute;
+      right: 30px;
+      bottom: 10px;
+    }
+    .controls, .keypad-row, .post-set-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px;
+    }
+    .controls button, .keypad-row button, .post-set-controls button {
+      padding: 20px;
+      font-size: 1.4em;
+      cursor: pointer;
+      border: 2px solid #333;
+      border-radius: 5px;
+      width: 100px;
+    }
+    .green-btn {
+      background-color: #00cc00;
+      color: white;
+    }
+    .red-btn {
+      background-color: #ff3333;
+      color: white;
+    }
+    .gray-btn {
+      background-color: #ccc;
+    }
+    .back-icon {
+      height: 40px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .bar .back-text {
+      color: white;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section id="home" class="main-screen">
+      <div class="bar">www.online-stopwatch.com</div>
+      <div class="choice-container">
+        <div class="choice" onclick="showScreen('stopwatch')">
+          <div>Stopwatch</div>
+          <img src="img/up.jpg" alt="Stopwatch" />
+        </div>
+        <div class="choice" onclick="showScreen('countdown')">
+          <div>Countdown</div>
+          <img src="img/down.jpg" alt="Countdown" />
+        </div>
+      </div>
+      <div class="bar"></div>
+    </section>
+
+    <section id="stopwatch" class="screen">
+      <div class="bar">www.online-stopwatch.com</div>
+      <div class="timer-display" id="swDisplay">00:00:00 <span class="millis">000</span></div>
+      <div class="controls" id="swControls">
+        <button class="green-btn" onclick="startStopwatch()">Start</button>
+        <button class="gray-btn" onclick="clearStopwatch()">Clear</button>
+      </div>
+      <div class="bar">
+        <img src="img/bk.jpg" alt="Back" class="back-icon" onclick="showScreen('home')" />
+        <span class="back-text">Back</span>
+      </div>
+    </section>
+
+    <section id="countdown" class="screen">
+      <div class="bar">www.online-stopwatch.com</div>
+      <div class="timer-display" id="cdDisplay">00:00:00 <span class="millis">000</span></div>
+      <div id="keypad">
+        <div class="keypad-row">
+          <button class="green-btn" onclick="appendDigit(0)">0</button>
+          <button class="green-btn" onclick="appendDigit(1)">1</button>
+          <button class="green-btn" onclick="appendDigit(2)">2</button>
+          <button class="green-btn" onclick="appendDigit(3)">3</button>
+          <button class="green-btn" onclick="appendDigit(4)">4</button>
+          <button class="gray-btn" onclick="clearCountdown()">Clear</button>
+        </div>
+        <div class="keypad-row">
+          <button class="green-btn" onclick="appendDigit(5)">5</button>
+          <button class="green-btn" onclick="appendDigit(6)">6</button>
+          <button class="green-btn" onclick="appendDigit(7)">7</button>
+          <button class="green-btn" onclick="appendDigit(8)">8</button>
+          <button class="green-btn" onclick="appendDigit(9)">9</button>
+          <button class="gray-btn" onclick="setCountdownUI()">Set</button>
+        </div>
+      </div>
+      <div id="postSetControls" class="post-set-controls hidden">
+        <button class="green-btn" onclick="startCountdown()">Start</button>
+        <button class="gray-btn" onclick="clearCountdown()">Clear</button>
+      </div>
+      <div class="bar">
+        <img src="img/bk.jpg" alt="Back" class="back-icon" onclick="showScreen('home')" />
+        <span class="back-text">Back</span>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
