@@ -234,39 +234,37 @@
         cursor: not-allowed;
       }
 
-      /* Control de sonido */
-      .sound-control {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-      }
-
+      /* Control de sonido integrado */
       .sound-btn {
-        padding: 10px;
-        background-color: #333;
-        color: white;
-        border: none;
-        border-radius: 5px;
+        padding: 15px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        border: 3px solid #9c27b0;
+        border-radius: 10px;
         cursor: pointer;
-        font-size: 14px;
+        transition: all 0.3s;
+        min-width: 100px;
+        background-color: #9c27b0;
+        color: white;
       }
 
       .sound-btn:hover {
-        background-color: #555;
+        background-color: #7b1fa2;
+        border-color: #7b1fa2;
       }
 
       .sound-btn.muted {
         background-color: #f44336;
+        border-color: #d32f2f;
+      }
+
+      .sound-btn.muted:hover {
+        background-color: #d32f2f;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <!-- Control de sonido -->
-      <div class="sound-control">
-        <button class="sound-btn" id="soundToggle">🔊 Sonido</button>
-      </div>
-
       <!-- Pestañas -->
       <div class="tabs">
         <button class="tab active" data-tab="timer1">Timer 1</button>
@@ -310,6 +308,7 @@
           <button class="control-btn pause-btn" id="pause1" disabled>Pause</button>
           <button class="control-btn reset-btn" id="reset1">Reset</button>
           <button class="control-btn clear-btn" id="clear1">Clear</button>
+          <button class="sound-btn" id="soundToggle">🔊 Sonido</button>
         </div>
       </div>
 
@@ -349,6 +348,7 @@
           <button class="control-btn pause-btn" id="pause2" disabled>Pause</button>
           <button class="control-btn reset-btn" id="reset2">Reset</button>
           <button class="control-btn clear-btn" id="clear2">Clear</button>
+          <button class="sound-btn" id="soundToggle2">🔊 Sonido</button>
         </div>
       </div>
 
@@ -383,6 +383,7 @@
           <button class="control-btn pause-btn" id="pause3" disabled>Pause</button>
           <button class="control-btn reset-btn" id="reset3">Reset</button>
           <button class="control-btn clear-btn" id="clear3">Clear</button>
+          <button class="sound-btn" id="soundToggle3">🔊 Sonido</button>
         </div>
       </div>
     </div>
@@ -430,14 +431,20 @@
           });
         });
 
-        // Manejar botón de sonido
-        const soundToggle = document.getElementById("soundToggle");
+        // Manejar botones de sonido
+        const soundButtons = document.querySelectorAll(".sound-btn");
         let soundEnabled = true;
 
-        soundToggle.addEventListener("click", function () {
-          soundEnabled = !soundEnabled;
-          this.classList.toggle("muted");
-          this.textContent = soundEnabled ? "🔊 Sonido" : "🔇 Silenciado";
+        soundButtons.forEach(btn => {
+          btn.addEventListener("click", function () {
+            soundEnabled = !soundEnabled;
+
+            // Actualizar todos los botones de sonido
+            soundButtons.forEach(soundBtn => {
+              soundBtn.classList.toggle("muted");
+              soundBtn.textContent = soundEnabled ? "🔊 Sonido" : "🔇 Silenciado";
+            });
+          });
         });
 
         // Actualizar nombres de pestañas cuando se cambie el nombre del timer
