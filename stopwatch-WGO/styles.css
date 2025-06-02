@@ -1,0 +1,56 @@
+/* Estilos adicionales y personalizados */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.display-area {
+    min-height: 100px; /* Asegura un tamaño mínimo para el display */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.display-time {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #343a40; /* Color oscuro para el texto del tiempo */
+    font-family: 'Courier New', Courier, monospace; /* Fuente monoespaciada para mejor legibilidad del tiempo */
+}
+
+/* Ajustes para inputs de cuenta regresiva */
+#countdown-hours,
+#countdown-minutes,
+#countdown-seconds {
+    max-width: 80px;
+    font-size: 1.25rem;
+}
+
+/* Media queries para adaptar el tamaño de fuente en pantallas pequeñas */
+@media (max-width: 768px) {
+    .display-time {
+        font-size: 2.5rem;
+    }
+    .btn-lg {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+    #countdown-hours,
+    #countdown-minutes,
+    #countdown-seconds {
+        max-width: 60px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .display-time {
+        font-size: 2rem;
+    }
+    .btn-lg {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .d-grid.gap-2.d-md-block button {
+        margin: 0.25rem 0 !important; /* Ajusta el margen para botones apilados */
+    }
+}
