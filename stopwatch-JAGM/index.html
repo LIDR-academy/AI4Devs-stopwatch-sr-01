@@ -389,7 +389,151 @@
     </div>
 
     <script>
-      // Funcionalidad básica de pestañas
+      // Variables globales para el manejo de timers
+      const timers = {
+        1: {
+          mode: "stopwatch", // 'stopwatch' o 'countdown'
+          running: false,
+          paused: false,
+          startTime: 0,
+          pausedTime: 0,
+          currentTime: 0,
+          interval: null,
+          name: "Timer 1",
+        },
+        2: {
+          mode: "stopwatch",
+          running: false,
+          paused: false,
+          startTime: 0,
+          pausedTime: 0,
+          currentTime: 0,
+          interval: null,
+          name: "Timer 2",
+        },
+        3: {
+          mode: "stopwatch",
+          running: false,
+          paused: false,
+          startTime: 0,
+          pausedTime: 0,
+          currentTime: 0,
+          interval: null,
+          name: "Timer 3",
+        },
+      };
+
+      let soundEnabled = true;
+
+      // Función para formatear tiempo en HH:MM:SS
+      function formatTime(totalSeconds) {
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        return `${hours.toString().padStart(2, "0")}:${minutes
+          .toString()
+          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+      }
+
+      // Función para actualizar el display de un timer
+      function updateDisplay(timerId) {
+        const timer = timers[timerId];
+        const display = document.getElementById(`display${timerId}`);
+
+        if (timer.mode === "stopwatch") {
+          display.textContent = formatTime(timer.currentTime);
+        }
+      }
+
+      // Función para iniciar cronómetro
+      function startStopwatch(timerId) {
+        const timer = timers[timerId];
+        const startBtn = document.getElementById(`start${timerId}`);
+        const pauseBtn = document.getElementById(`pause${timerId}`);
+
+        if (!timer.running) {
+          // Iniciar el cronómetro
+          timer.running = true;
+          timer.paused = false;
+
+          if (timer.currentTime === 0) {
+            // Nuevo cronómetro
+            timer.startTime = Date.now();
+          } else {
+            // Reanudar cronómetro pausado
+            timer.startTime = Date.now() - timer.currentTime * 1000;
+          }
+
+          timer.interval = setInterval(() => {
+            timer.currentTime = Math.floor((Date.now() - timer.startTime) / 1000);
+            updateDisplay(timerId);
+          }, 1000);
+
+          // Actualizar botones
+          startBtn.disabled = true;
+          pauseBtn.disabled = false;
+          startBtn.textContent = "Running...";
+        }
+      }
+
+      // Función para pausar cronómetro
+      function pauseStopwatch(timerId) {
+        const timer = timers[timerId];
+        const startBtn = document.getElementById(`start${timerId}`);
+        const pauseBtn = document.getElementById(`pause${timerId}`);
+
+        if (timer.running) {
+          timer.running = false;
+          timer.paused = true;
+          clearInterval(timer.interval);
+
+          // Actualizar botones
+          startBtn.disabled = false;
+          pauseBtn.disabled = true;
+          startBtn.textContent = "Resume";
+        }
+      }
+
+      // Función para resetear cronómetro
+      function resetStopwatch(timerId) {
+        const timer = timers[timerId];
+        const startBtn = document.getElementById(`start${timerId}`);
+        const pauseBtn = document.getElementById(`pause${timerId}`);
+
+        // Detener el cronómetro
+        timer.running = false;
+        timer.paused = false;
+        clearInterval(timer.interval);
+
+        // Resetear tiempos
+        timer.startTime = 0;
+        timer.pausedTime = 0;
+        timer.currentTime = 0;
+
+        // Actualizar display
+        updateDisplay(timerId);
+
+        // Actualizar botones
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        startBtn.textContent = "Start";
+      }
+
+      // Función para limpiar cronómetro
+      function clearStopwatch(timerId) {
+        resetStopwatch(timerId);
+
+        // Limpiar configuración si está en modo countdown
+        const timer = timers[timerId];
+        if (timer.mode === "countdown") {
+          document.getElementById(`hours${timerId}`).value = 0;
+          document.getElementById(`minutes${timerId}`).value = 5;
+          document.getElementById(`seconds${timerId}`).value = 0;
+        }
+      }
+
+      // Funcionalidad básica de pestañas y controles
       document.addEventListener("DOMContentLoaded", function () {
         // Manejar clics en las pestañas
         const tabs = document.querySelectorAll(".tab");
@@ -413,9 +557,17 @@
         const modeButtons = document.querySelectorAll(".mode-btn");
         modeButtons.forEach(btn => {
           btn.addEventListener("click", function () {
-            const timer = this.getAttribute("data-timer");
+            const timerId = this.getAttribute("data-timer");
             const mode = this.getAttribute("data-mode");
-            const config = document.getElementById(`config${timer}`);
+            const config = document.getElementById(`config${timerId}`);
+
+            // Actualizar el modo del timer
+            timers[timerId].mode = mode;
+
+            // Resetear el timer al cambiar de modo
+            if (mode === "stopwatch") {
+              resetStopwatch(timerId);
+            }
 
             // Actualizar botones de modo activo
             const siblingBtns = this.parentNode.querySelectorAll(".mode-btn");
@@ -431,9 +583,47 @@
           });
         });
 
+        // Manejar botones de control para cada timer
+        for (let i = 1; i <= 3; i++) {
+          // Botón Start
+          document.getElementById(`start${i}`).addEventListener("click", function () {
+            const timer = timers[i];
+            if (timer.mode === "stopwatch") {
+              startStopwatch(i);
+            }
+            // La funcionalidad de countdown se agregará en el siguiente paso
+          });
+
+          // Botón Pause
+          document.getElementById(`pause${i}`).addEventListener("click", function () {
+            const timer = timers[i];
+            if (timer.mode === "stopwatch") {
+              pauseStopwatch(i);
+            }
+            // La funcionalidad de countdown se agregará en el siguiente paso
+          });
+
+          // Botón Reset
+          document.getElementById(`reset${i}`).addEventListener("click", function () {
+            const timer = timers[i];
+            if (timer.mode === "stopwatch") {
+              resetStopwatch(i);
+            }
+            // La funcionalidad de countdown se agregará en el siguiente paso
+          });
+
+          // Botón Clear
+          document.getElementById(`clear${i}`).addEventListener("click", function () {
+            const timer = timers[i];
+            if (timer.mode === "stopwatch") {
+              clearStopwatch(i);
+            }
+            // La funcionalidad de countdown se agregará en el siguiente paso
+          });
+        }
+
         // Manejar botones de sonido
         const soundButtons = document.querySelectorAll(".sound-btn");
-        let soundEnabled = true;
 
         soundButtons.forEach(btn => {
           btn.addEventListener("click", function () {
@@ -453,6 +643,8 @@
           input.addEventListener("input", function () {
             const timerId = this.id.replace("name", "");
             const tab = document.querySelector(`.tab[data-tab="timer${timerId}"]`);
+            timers[timerId].name = this.value.trim() || `Timer ${timerId}`;
+
             if (this.value.trim()) {
               tab.textContent = this.value.trim();
             } else {
