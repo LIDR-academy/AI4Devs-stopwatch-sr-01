@@ -5,45 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cronómetros y Cuentas Regresivas</title>
   <script defer src="script.js"></script>
-  <script>
-    if (Notification.permission !== "granted") {
-      Notification.requestPermission();
-    }
-  </script>
-  <script>
-    window.onload = function() {
-      renderTimers();
-      renderCountdowns();
-    }
-  </script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800">
-  <audio id="alertSound" src="https://www.myinstants.com/media/sounds/ding-sound-effect_2.mp3"></audio>
+    <button id="testAlarmBtn" class="fixed bottom-3 right-3 bg-yellow-200 px-4 py-2 rounded shadow">Probar sonido alarma</button>
+  <!-- Audio: alarma suave -->
+  <audio id="alertSound" src="https://www.myinstants.com/media/sounds/ding-sound-effect_2.mp3" preload="auto"></audio>
 
   <div class="max-w-7xl mx-auto p-4">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
       <!-- Cronómetros -->
       <div>
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-xl font-semibold">Cronómetros</h2>
           <div class="space-x-2">
-            <button onclick="addTimer()" class="px-3 py-1 rounded bg-blue-100">➕ Añadir</button>
-            <button onclick="clearTimers()" class="px-3 py-1 rounded bg-red-100">🗑️ Todos</button>
+            <button id="addTimerBtn" class="px-3 py-1 rounded bg-blue-100 hover:bg-blue-200 active:scale-95 focus:ring transition font-semibold">➕ Añadir</button>
+            <button id="clearTimersBtn" class="px-3 py-1 rounded bg-red-100 hover:bg-red-200 active:scale-95 focus:ring transition font-semibold">🗑️ Todos</button>
           </div>
         </div>
         <div id="timersContainer" class="space-y-4"></div>
         <div id="timerPagination" class="flex justify-center mt-4 space-x-2"></div>
       </div>
-
       <!-- Cuentas regresivas -->
       <div>
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-xl font-semibold">Cuentas Regresivas</h2>
           <div class="space-x-2">
-            <button onclick="openCountdownModal()" class="px-3 py-1 rounded bg-green-100">➕ Añadir</button>
-            <button onclick="clearCountdowns()" class="px-3 py-1 rounded bg-red-100">🗑️ Todas</button>
+            <button id="openCountdownBtn" class="px-3 py-1 rounded bg-green-100 hover:bg-green-200 active:scale-95 focus:ring transition font-semibold">➕ Añadir</button>
+            <button id="clearCountdownsBtn" class="px-3 py-1 rounded bg-red-100 hover:bg-red-200 active:scale-95 focus:ring transition font-semibold">🗑️ Todas</button>
           </div>
         </div>
         <div id="countdownsContainer" class="space-y-4"></div>
@@ -71,8 +60,8 @@
         </div>
       </div>
       <div class="flex justify-end space-x-2">
-        <button onclick="closeCountdownModal()" class="px-3 py-1 rounded bg-gray-100">Cancelar</button>
-        <button onclick="addCountdownFromModal()" class="px-3 py-1 rounded bg-blue-100">Aceptar</button>
+        <button id="closeCountdownModalBtn" class="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 active:scale-95 focus:ring transition">Cancelar</button>
+        <button id="addCountdownModalBtn" class="px-3 py-1 rounded bg-blue-100 hover:bg-blue-200 active:scale-95 focus:ring transition">Aceptar</button>
       </div>
     </div>
   </div>
