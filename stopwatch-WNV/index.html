@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi Timer</title>
+  <link rel="stylesheet" href="./src/styles/styles.css" />
+</head>
+<body>
+  <main class="app">
+    <h1 class="app__header">Multi Timer App</h1>
+    <div class="app__controls">
+      <select id="timer-type">
+        <option value="stopwatch">Stopwatch</option>
+        <option value="countdown">Countdown</option>
+      </select>
+      <button id="add-timer">Add Timer</button>
+    </div>
+    <div id="timers" role="region" aria-live="polite"></div>
+  </main>
+  <script type="module" src="./src/script.js"></script>
+</body>
+</html>
