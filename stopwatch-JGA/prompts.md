@@ -1,5 +1,13 @@
 # **Prompt 1**
 
+Intente realizar One Shot prompting especificando bien la estructura del prompt y separando rol, especificaciones y observaciones al final
+
+Le di el contexto de trabajar con dos ficheros y eso al menos lo mantuvo durante todo el chat.
+
+No resulto tanto este primer prompt porque me respondio con los pasos para la realización
+
+Prompt realizado:
+
 #Rol
 
 Eres un ingenerio de software especializado en vanilla js
@@ -1250,7 +1258,7 @@ if (audio) {
 
 ¿Te gustaría probar con este o necesitas otro tipo de sonido?
 
-# **Prompt 8**
+# **Prompt 8 Prompt final**
 
 Sigue sin funcionar el audio.
 
