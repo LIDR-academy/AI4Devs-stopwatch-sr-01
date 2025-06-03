@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cronómetros y Temporizadores Múltiples</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f7fa;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    button {
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button.add {
+      background: #2ecc71;
+      color: white;
+    }
+
+    .timers-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .timer-card {
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      width: 300px;
+    }
+
+    .display {
+      font-size: 2rem;
+      background: #e9edfb;
+      border-radius: 0.5rem;
+      text-align: center;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .buttons button {
+      flex: 1 1 40%;
+    }
+
+    .laps {
+      list-style: none;
+      padding-left: 0;
+      max-height: 100px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+    }
+
+    .countdown-inputs {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .countdown-inputs input {
+      width: 60px;
+      padding: 0.3rem;
+      text-align: center;
+    }
+
+    .notification {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      display: none;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .timer-card {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gestión de Cronómetros y Temporizadores</h1>
+
+  <div class="controls">
+    <button class="add" onclick="addStopwatch()">Añadir Cronómetro</button>
+    <button class="add" onclick="addCountdown()">Añadir Temporizador</button>
+  </div>
+
+  <div class="timers-container" id="timersContainer"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
