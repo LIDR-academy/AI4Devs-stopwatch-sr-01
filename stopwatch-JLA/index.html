@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch & Countdown Timer Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-title">Timer Pro</h1>
+            <div class="theme-toggle">
+                <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Mode Selection -->
+            <section class="mode-selection">
+                <div class="mode-tabs">
+                    <button class="mode-tab active" data-mode="stopwatch" aria-label="Switch to Stopwatch mode">
+                        <span class="tab-icon">⏱️</span>
+                        <span class="tab-text">Stopwatch</span>
+                    </button>
+                    <button class="mode-tab" data-mode="countdown" aria-label="Switch to Countdown mode">
+                        <span class="tab-icon">⏰</span>
+                        <span class="tab-text">Countdown</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Timer Management -->
+            <section class="timer-management">
+                <button class="add-timer-btn" id="addTimerBtn">
+                    <span class="btn-icon">+</span>
+                    <span class="btn-text">Add Timer</span>
+                </button>
+            </section>
+
+            <!-- Timers Container -->
+            <section class="timers-container" id="timersContainer">
+                <!-- Timers will be dynamically added here -->
+            </section>
+
+            <!-- Keyboard Shortcuts Help -->
+            <div class="shortcuts-help" id="shortcutsHelp">
+                <div class="shortcuts-content">
+                    <h3>Keyboard Shortcuts</h3>
+                    <div class="shortcuts-list">
+                        <div class="shortcut-item">
+                            <kbd>Space</kbd>
+                            <span>Start/Stop active timer</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <kbd>R</kbd>
+                            <span>Reset active timer</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <kbd>L</kbd>
+                            <span>Add lap time (stopwatch)</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <kbd>T</kbd>
+                            <span>Switch modes</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <kbd>A</kbd>
+                            <span>Add new timer</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <kbd>H</kbd>
+                            <span>Toggle help</span>
+                        </div>
+                    </div>
+                    <button class="close-help" id="closeHelp">×</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <button class="help-btn" id="helpBtn" aria-label="Show keyboard shortcuts">
+                <span>?</span>
+            </button>
+            <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen">
+                <span>⛶</span>
+            </button>
+        </footer>
+    </div>
+
+    <!-- Audio elements for sound feedback -->
+    <audio id="startSound" preload="auto"></audio>
+    <audio id="stopSound" preload="auto"></audio>
+    <audio id="alarmSound" preload="auto"></audio>
+    
+    <script src="script.js"></script>
+</body>
+</html>  
