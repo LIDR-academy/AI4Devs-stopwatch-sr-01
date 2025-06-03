@@ -14,7 +14,10 @@ ChatGPT (4o), Cursor (auto), Copilot (Claude 3.5 Sonnet)
 - Asking all at once made Cursor take a looong time
 - Neither timer nor stopwatch worked on the beginning, tho it told me it would be the next steps
 - Cursor stopped working, went to copilot
+- I had to tell it to fix the lap
 
 # Decisiones
+
+- I had to add a button to test the timmer so i wouldn't have to wait
 
 # Evaluacion

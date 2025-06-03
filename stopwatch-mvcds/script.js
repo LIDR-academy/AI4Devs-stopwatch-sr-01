@@ -71,6 +71,39 @@ class Stopwatch {
   }
 }
 
+// Function to show notifications
+function showNotification(message) {
+  // Remove any existing notification
+  const existingNotification = document.querySelector('.notification');
+  if (existingNotification) {
+    existingNotification.remove();
+  }
+
+  // Create new notification
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.innerHTML = `
+    <div class="notification__message">
+      <span>🔔</span>
+      <span>${message}</span>
+    </div>
+  `;
+
+  // Add to DOM
+  document.body.appendChild(notification);
+
+  // Trigger animation
+  requestAnimationFrame(() => {
+    notification.classList.add('show');
+  });
+
+  // Remove after delay
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
+
 class Timer {
   constructor(displayElement, card) {
     this.display = displayElement;
@@ -131,6 +164,7 @@ class Timer {
     clearInterval(this.intervalId);
     this.card.classList.add("completed");
     timerSound.play();
+    showNotification("Timer finished!");
     setTimeout(() => this.card.classList.remove("completed"), 1000);
   }
 }
@@ -190,6 +224,12 @@ cardsContainer.addEventListener("click", (e) => {
     if (action === "start") card.timer.start();
     if (action === "pause") card.timer.pause();
     if (action === "reset") card.timer.reset();
+    if (action === "test-notify") {
+      card.classList.add("completed");
+      timerSound.play();
+      showNotification("Test notification");
+      setTimeout(() => card.classList.remove("completed"), 1000);
+    }
   }
 
   // Handle timer presets
