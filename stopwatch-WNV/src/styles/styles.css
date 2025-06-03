@@ -1,0 +1,88 @@
+body {
+  font-family: sans-serif;
+  padding: 1rem;
+  margin: 0;
+  background:  #f9f9f9;
+  color: #333;
+}
+
+.app {
+  max-width: 600px;
+  margin: auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app__header {
+  text-align: center;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.app__controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+#add-timer {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#add-timer:hover {
+  background-color: #45a049;
+}
+
+.timer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  align-items: center;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.timer__display {
+  flex: 1 1 100%;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.timer__button {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  background: #eee;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.timer__button:hover,
+.timer__button:focus {
+  background: #ddd;
+  outline: none;
+}
+
+@media (min-width: 480px) {
+  .timer__display {
+    flex: 1;
+    text-align: left;
+  }
+
+  .timer__button {
+    flex: none;
+  }
+}
