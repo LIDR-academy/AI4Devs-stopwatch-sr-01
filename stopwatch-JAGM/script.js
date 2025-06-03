@@ -397,12 +397,10 @@ class Timer {
             </div>
             
             <div class="controls">
-                <button class="btn btn-start" onclick="timerManager.getActiveTimer().start()" 
-                        ${this.isRunning ? "disabled" : ""}>
+                <button class="btn btn-start" onclick="timerManager.getActiveTimer().start()">
                     Start
                 </button>
-                <button class="btn btn-pause" onclick="timerManager.getActiveTimer().pause()" 
-                        ${this.isRunning ? "" : "disabled"}>
+                <button class="btn btn-pause" onclick="timerManager.getActiveTimer().pause()"> 
                     Pause
                 </button>
                 <button class="btn btn-reset" onclick="timerManager.getActiveTimer().reset()">
