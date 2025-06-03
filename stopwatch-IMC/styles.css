@@ -1,0 +1,287 @@
+/* style.css */
+
+/* ===========================
+   1) Estilos Generales
+   =========================== */
+
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===========================
+   2) BLOQUE SUPERIOR (selector de cronómetro / cuenta regresiva)
+   =========================== */
+
+#control-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;           /* espacio fijo entre los dos botones */
+  max-width: 600px;     /* ancho máximo */
+  margin: 0 auto 1rem;  /* centrar y margen inferior */
+  flex-wrap: nowrap;    /* obligar a que sigan en una línea */
+}
+
+#control-panel .btn {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 9999px;       /* forma tipo “pill” */
+  border: none;                /* sin borde visible */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.12s ease-in-out, box-shadow 0.12s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #fff;
+}
+
+#control-panel .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* + Cronómetro: degradado verde más vibrante */
+.btn-add-sw {
+  background: linear-gradient(to bottom right, #4dd964 0%, #28a745 100%);
+}
+
+/* + Cuenta regresiva: degradado rojo más nítido */
+.btn-add-cd {
+  background: linear-gradient(to bottom right, #ff6b6b 0%, #e63946 100%);
+}
+
+/* Ajustar el tamaño del ícono dentro del botón para que sea un poco más grande */
+#control-panel .btn svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+/* ===========================
+   3) Tarjetas (Cronómetro y Cuenta Regresiva)
+   =========================== */
+
+/* Ambas tarjetas (card) tendrán margen y un ancho máximo de 600px, centradas */
+.stopwatch-card,
+.countdown-card {
+  margin: 1rem auto;
+  max-width: 600px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* ===========================
+   4) Cronómetro: Pantalla y Botones
+   =========================== */
+
+/* Pantalla del cronómetro: fondo violeta-azulado claro + borde oscuro */
+.time-display {
+  background-color: #e0e4ff; /* muy parecido a la referencia */
+  border: 4px solid #444;
+  border-radius: 20px;
+  padding: 8px 12px;
+  position: relative; /* para colocar los milisegundos dentro */
+  user-select: none;
+}
+
+/* Texto hh:mm:ss */
+.time-display .hms {
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #111;
+}
+
+/* Milisegundos, alineados a la derecha dentro de la misma caja */
+.time-display .ms {
+  font-size: 1rem;
+  position: absolute;
+  bottom: 6px;
+  right: 12px;
+  color: #111;
+}
+
+/* Contenedor de botones (Start y Clear) */
+.timer-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 10px;
+}
+
+/* Botones del cronómetro (Start y Clear) */
+.stopwatch-btn {
+  flex: 1 1 auto;
+  min-width: 100px;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 10px;
+  border: 2px solid #444;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.12s ease-in-out;
+}
+
+.stopwatch-btn:hover {
+  transform: scale(1.03);
+}
+
+/* Verde para “Start” */
+.stopwatch-btn.start {
+  background: linear-gradient(to bottom, #66de66 0%, #33bb33 100%);
+}
+
+/* Rojo para “Clear” */
+.stopwatch-btn.clear {
+  background: linear-gradient(to bottom, #ff6666 0%, #cc3333 100%);
+}
+
+/* ===========================
+   5) Cuenta Regresiva: Pantalla y Teclado (fase 1)
+   =========================== */
+
+.countdown-display {
+  background-color: #e0e4ff;
+  border: 4px solid #444;
+  border-radius: 20px;
+  padding: 8px 12px;
+  position: relative;
+  user-select: none;
+  text-align: center;
+}
+
+/* Texto hh:mm:ss en la cuenta regresiva */
+.countdown-display .hms {
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #111;
+}
+
+/* Contenedor del teclado numérico (fase 1) */
+.keypad {
+  margin-top: 12px;
+}
+
+/* Cada fila del teclado */
+.keypad .row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* Botones numéricos (0–9), fondo AZUL */
+.key-btn {
+  width: 60px;
+  height: 60px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 2px solid #444;
+  background: linear-gradient(to bottom, #6699ff 0%, #3366cc 100%);
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease-in-out;
+}
+
+.key-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Botón “Set” en fase 1: fondo AZUL más oscuro y más ancho */
+.set-btn {
+  width: 100px;
+  height: 60px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 2px solid #444;
+  background: linear-gradient(to bottom, #3366cc 0%, #003399 100%);
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease-in-out;
+}
+
+.set-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Botón “Clear” en fase 1: fondo GRIS */
+.clear-input-btn {
+  width: 100px;
+  height: 60px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 2px solid #444;
+  background: linear-gradient(to bottom, #cccccc 0%, #888888 100%);
+  color: #222;
+  text-shadow: none;
+  transition: transform 0.1s ease-in-out;
+}
+
+.clear-input-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ===========================
+   6) Cuenta Regresiva: Botones Fase 2 (Start, Reset, Delete)
+   =========================== */
+
+/* Contenedor de fase 2: NO definimos display por CSS, se maneja en JS */
+.countdown-active-buttons {
+  margin-top: 12px;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Verde para “Start” en fase 2 */
+.countdown-active-buttons .stopwatch-btn.start {
+  background: linear-gradient(to bottom, #66de66 0%, #33bb33 100%);
+}
+
+/* Gris para “Reset” en fase 2 */
+.countdown-active-buttons .stopwatch-btn.reset {
+  background: linear-gradient(to bottom, #cccccc 0%, #888888 100%);
+  color: #222;
+  text-shadow: none;
+}
+
+/* Rojo para “Delete” en fase 2 */
+.countdown-active-buttons .stopwatch-btn.delete {
+  background: linear-gradient(to bottom, #ff6666 0%, #cc3333 100%);
+}
+
+/* ===========================
+   7) Estado “finalizada” (resaltar la tarjeta)
+   =========================== */
+
+.countdown-finished .countdown-display {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+}
+
+/* ===========================
+   8) Responsive (móviles muy pequeños)
+   =========================== */
+
+@media (max-width: 576px) {
+  .key-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+  }
+  .set-btn,
+  .clear-input-btn {
+    width: 80px;
+    height: 48px;
+    font-size: 1rem;
+  }
+}
