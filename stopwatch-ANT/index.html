@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronómetro y Cuenta Regresiva</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Cronómetro y Cuenta Regresiva</h1>
+    <div id="controls">
+      <button onclick="addTimer('stopwatch')">Nuevo Cronómetro</button>
+      <button onclick="addTimer('countdown')">Nueva Cuenta Regresiva</button>
+    </div>
+    <div id="timers"></div>
+    <audio id="alert-sound" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa1c7b.mp3"></audio>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
