@@ -402,7 +402,7 @@ class Timer {
                     Start
                 </button>
                 <button class="btn btn-pause" onclick="timerManager.getActiveTimer().pause()" 
-                        ${!this.isRunning ? "disabled" : ""}>
+                        ${this.isRunning ? "" : "disabled"}>
                     Pause
                 </button>
                 <button class="btn btn-reset" onclick="timerManager.getActiveTimer().reset()">
