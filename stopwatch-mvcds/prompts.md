@@ -1,9 +1,3 @@
-- **Prompt inicial con justificación** - Debes explicar qué estrategia de prompting elegiste, por qué estructuraste los prompts de una u otra manera y qué tipo de consideraciones tuviste en cuenta al hacerlo (por ejemplo, nivel de detalle, contexto, iteraciones, etc.).
-- **Resultados parciales** con errores o fallos detectados
-- **Refinamientos aplicados**
-- **Prompt final** _(también colócalo en el comentario del Pull Request)_
-- **Breve explicación** de por qué el último prompt funcionó mejor
-
 # Prompt Inicial
 
 I've used metaprompt because I want to train this practice, i've tried to give it all the requirements and be explicit about how i wanted the files to look like
@@ -34,9 +28,21 @@ And produce the prompt in markdown
 
 - The initial markdown didn't generate code
 - WHen it generatd code, it was on the template folder instead of mine
+- First versio of the code didn't have neither stopwathces/timers working, just adding and removing them
+- Second version lacked laps and notifications
+- Third was filling the basic requirements
+- Fourth had UI improvements
 
 # Refinamentos Aplicaods
 
+- Le pedi un par de cosas que no estavan functionando bien a principio
+
 # Prompt Final
 
+for stopwatches: lap can only be available once it is running
+
+for timers: remove the set button, the user has to manually start it, hide the test button
+
 ## Explicacion
+
+Last prompt was very specific and built on base of existing code, i was just adjusting functionality

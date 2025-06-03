@@ -23,6 +23,9 @@ class Stopwatch {
     this.elapsedTime = 0;
     this.intervalId = null;
     this.laps = [];
+    this.card = displayElement.closest('.card');
+    this.lapsList = this.card.querySelector('.laps__list');
+    this.updateButtonVisibility();
   }
 
   start() {
@@ -30,6 +33,7 @@ class Stopwatch {
       this.running = true;
       this.startTime = Date.now() - this.elapsedTime;
       this.intervalId = setInterval(() => this.updateDisplay(), 10);
+      this.updateButtonVisibility();
     }
   }
 
@@ -38,6 +42,7 @@ class Stopwatch {
       this.running = false;
       clearInterval(this.intervalId);
       this.elapsedTime = Date.now() - this.startTime;
+      this.updateButtonVisibility();
     }
   }
 
@@ -47,13 +52,34 @@ class Stopwatch {
     this.elapsedTime = 0;
     this.startTime = 0;
     this.laps = [];
+    this.lapsList.innerHTML = ''; // Clear lap list in UI
     this.updateDisplay();
+    this.updateButtonVisibility();
+  }
+
+  updateButtonVisibility() {
+    const startBtn = this.card.querySelector('[data-action="start"]');
+    const pauseBtn = this.card.querySelector('[data-action="pause"]');
+    const resetBtn = this.card.querySelector('[data-action="reset"]');
+    const lapBtn = this.card.querySelector('[data-action="lap"]');
+
+    startBtn.style.display = this.running ? 'none' : 'inline-block';
+    pauseBtn.style.display = this.running ? 'inline-block' : 'none';
+    resetBtn.style.display = this.running || this.elapsedTime > 0 ? 'inline-block' : 'none';
+    lapBtn.style.display = this.running ? 'inline-block' : 'none';
   }
 
   lap() {
     const currentTime = this.running ? Date.now() - this.startTime : this.elapsedTime;
     const lapTime = this.formatTime(currentTime);
     this.laps.push(lapTime);
+
+    // Create and append new lap item
+    const li = document.createElement('li');
+    li.className = 'laps__item';
+    li.textContent = `Lap ${this.laps.length}: ${lapTime}`;
+    this.lapsList.appendChild(li);
+
     return lapTime;
   }
 
@@ -111,6 +137,20 @@ class Timer {
     this.running = false;
     this.remainingTime = 0;
     this.intervalId = null;
+    this.setupTimeInput();
+    this.updateButtonVisibility();
+  }
+
+  setupTimeInput() {
+    const input = this.card.querySelector('.input--time');
+    input.addEventListener('input', () => {
+      const minutes = parseInt(input.value);
+      if (minutes > 0) {
+        this.remainingTime = minutes * 60 * 1000;
+        this.updateDisplay();
+        this.updateButtonVisibility();
+      }
+    });
   }
 
   start() {
@@ -118,6 +158,7 @@ class Timer {
       this.running = true;
       this.endTime = Date.now() + this.remainingTime;
       this.intervalId = setInterval(() => this.updateDisplay(), 100);
+      this.updateButtonVisibility();
     }
   }
 
@@ -126,6 +167,7 @@ class Timer {
       this.running = false;
       clearInterval(this.intervalId);
       this.remainingTime = this.endTime - Date.now();
+      this.updateButtonVisibility();
     }
   }
 
@@ -133,13 +175,33 @@ class Timer {
     this.running = false;
     clearInterval(this.intervalId);
     this.remainingTime = 0;
+    const input = this.card.querySelector('.input--time');
+    input.value = '';
     this.updateDisplay();
+    this.updateButtonVisibility();
   }
 
   setTime(minutes) {
-    this.reset();
-    this.remainingTime = minutes * 60 * 1000;
-    this.updateDisplay();
+    if (!this.running) {
+      this.reset();
+      this.remainingTime = minutes * 60 * 1000;
+      this.updateDisplay();
+      this.updateButtonVisibility();
+    }
+  }
+
+  updateButtonVisibility() {
+    const startBtn = this.card.querySelector('[data-action="start"]');
+    const pauseBtn = this.card.querySelector('[data-action="pause"]');
+    const resetBtn = this.card.querySelector('[data-action="reset"]');
+    const input = this.card.querySelector('.input--time');
+
+    startBtn.style.display = this.running ? 'none' : 'inline-block';
+    pauseBtn.style.display = this.running ? 'inline-block' : 'none';
+    resetBtn.style.display = this.running || this.remainingTime > 0 ? 'inline-block' : 'none';
+
+    // Disable input while timer is running
+    input.disabled = this.running;
   }
 
   formatTime(ms) {
@@ -165,7 +227,10 @@ class Timer {
     this.card.classList.add("completed");
     timerSound.play();
     showNotification("Timer finished!");
-    setTimeout(() => this.card.classList.remove("completed"), 1000);
+    setTimeout(() => {
+      this.card.classList.remove("completed");
+      this.updateButtonVisibility();
+    }, 1000);
   }
 }
 
@@ -203,47 +268,36 @@ cardsContainer.addEventListener("click", (e) => {
     return;
   }
 
-  // Handle stopwatch controls
-  if (card.dataset.type === "stopwatch" && card.stopwatch) {
+  // Action buttons
+  if (e.target.dataset.action) {
     const action = e.target.dataset.action;
-    if (action === "start") card.stopwatch.start();
-    if (action === "pause") card.stopwatch.pause();
-    if (action === "reset") card.stopwatch.reset();
-    if (action === "lap") {
-      const lapTime = card.stopwatch.lap();
-      const lapsList = card.querySelector(".laps__list");
-      const li = document.createElement("li");
-      li.textContent = `Lap ${card.stopwatch.laps.length}: ${lapTime}`;
-      lapsList.appendChild(li);
+    if (card.dataset.type === "stopwatch" && card.stopwatch) {
+      if (card.stopwatch[action]) card.stopwatch[action]();
+    } else if (card.dataset.type === "timer" && card.timer) {
+      if (card.timer[action]) {
+        card.timer[action]();
+      }
     }
   }
 
-  // Handle timer controls
-  if (card.dataset.type === "timer" && card.timer) {
-    const action = e.target.dataset.action;
-    if (action === "start") card.timer.start();
-    if (action === "pause") card.timer.pause();
-    if (action === "reset") card.timer.reset();
-    if (action === "test-notify") {
-      card.classList.add("completed");
-      timerSound.play();
-      showNotification("Test notification");
-      setTimeout(() => card.classList.remove("completed"), 1000);
-    }
-  }
-
-  // Handle timer presets
-  if (e.target.classList.contains("btn--preset")) {
+  // Timer presets
+  if (e.target.dataset.minutes) {
     const minutes = parseInt(e.target.dataset.minutes);
-    card.timer.setTime(minutes);
+    if (card.timer) card.timer.setTime(minutes);
   }
+});
 
-  // Handle custom time input
-  if (e.target.classList.contains("btn--set")) {
-    const input = card.querySelector(".input--time");
-    const minutes = parseInt(input.value);
-    if (!isNaN(minutes) && minutes > 0) {
-      card.timer.setTime(minutes);
-    }
+// Handle custom timer input
+cardsContainer.addEventListener("click", (e) => {
+  if (!e.target.classList.contains("btn--set")) return;
+
+  const card = e.target.closest(".card");
+  if (!card || !card.timer) return;
+
+  const input = card.querySelector(".input--time");
+  const minutes = parseInt(input.value);
+  if (minutes > 0) {
+    card.timer.setTime(minutes);
+    input.value = "";
   }
 });
