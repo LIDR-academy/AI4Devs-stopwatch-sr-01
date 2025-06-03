@@ -1,0 +1,158 @@
+:root {
+  --main-bg: #f5f8fc;
+  --primary-blue: #3176fe;
+  --accent-green: #46d38e;
+  --accent-red: #f16060;
+  --btn-blue: #4083e8;
+  --btn-green: #46d38e;
+  --btn-red: #f16060;
+  --btn-gray: #e4eaf1;
+  --text-main: #24292f;
+  --text-light: #5d6b82;
+  --white: #fff;
+  --box-radius: 1.4rem;
+  --shadow: 0 8px 24px 0 rgba(30, 50, 120, 0.11);
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--main-bg);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.landing,
+.stopwatch,
+.countdown-setup,
+.countdown-active {
+  width: 100%;
+  max-width: 420px;
+  margin: 2.4rem auto 0 auto;
+  padding: 2rem 1rem 4.5rem 1rem;
+  box-sizing: border-box;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 2.2rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  letter-spacing: 1.5px;
+  text-shadow: 0 3px 16px rgba(49,118,254,0.07);
+}
+
+.big-btn {
+  padding: 1.2rem 1.7rem;
+  font-size: 1.15rem;
+  border: none;
+  border-radius: var(--box-radius);
+  background: var(--btn-blue);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.18s, box-shadow 0.14s;
+  margin-bottom: 0.3rem;
+}
+.big-btn:hover, .big-btn:active { background: var(--primary-blue); }
+
+.display-box {
+  background: var(--white);
+  color: var(--primary-blue);
+  border-radius: var(--box-radius);
+  padding: 1.8rem 0.7rem 1.1rem 0.7rem;
+  text-align: center;
+  margin-bottom: 1.7rem;
+  box-shadow: var(--shadow);
+  font-family: 'Roboto Mono', 'Menlo', 'Consolas', monospace;
+  position: relative;
+  min-height: 3.9rem;
+}
+
+.time-main {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  background: linear-gradient(90deg, #3176fe, #1ed18d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.time-ms {
+  font-size: 1.09rem;
+  font-weight: 400;
+  color: var(--text-light);
+  vertical-align: super;
+  margin-left: 0.36em;
+}
+
+.control-group {
+  display: flex;
+  gap: 1.1rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.control-btn {
+  flex: 1 1 0;
+  padding: 1rem 0;
+  font-size: 1.15rem;
+  border: none;
+  border-radius: var(--box-radius);
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: var(--shadow);
+  transition: background 0.17s, box-shadow 0.14s;
+}
+.control-btn.green { background: var(--btn-green); color: #fff;}
+.control-btn.blue { background: var(--btn-blue); color: #fff;}
+.control-btn.red { background: var(--btn-red); color: #fff;}
+.control-btn:active { filter: brightness(0.96); }
+
+.digit-keypad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.key-btn {
+  width: 3.4rem;
+  height: 3.4rem;
+  font-size: 1.35rem;
+  border-radius: 1rem;
+  background: var(--btn-gray);
+  border: 1.5px solid var(--primary-blue);
+  color: var(--primary-blue);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.13s;
+  box-shadow: 0 2px 9px 0 rgba(49,118,254,0.06);
+}
+.key-btn:active { background: #e0eaff; }
+
+@media (max-width: 640px) {
+  .landing, .stopwatch, .countdown-setup, .countdown-active {
+    max-width: 100vw;
+    padding: 0.6rem 0.1rem 4.1rem 0.1rem;
+  }
+  .big-btn, .control-btn, .key-btn {
+    font-size: 1rem;
+    padding: 0.65rem;
+  }
+  .display-box { padding: 1.2rem 0.2rem 0.9rem 0.2rem; }
+  .title { font-size: 1.4rem; }
+  .time-main { font-size: 1.45rem;}
+}
