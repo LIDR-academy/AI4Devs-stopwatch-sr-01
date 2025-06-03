@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cronómetros y Cuentas Regresivas</title>
+  <script defer src="script.js"></script>
+  <script>
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+  </script>
+  <script>
+    window.onload = function() {
+      renderTimers();
+      renderCountdowns();
+    }
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <audio id="alertSound" src="https://www.myinstants.com/media/sounds/ding-sound-effect_2.mp3"></audio>
+
+  <div class="max-w-7xl mx-auto p-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Cronómetros -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold">Cronómetros</h2>
+          <div class="space-x-2">
+            <button onclick="addTimer()" class="px-3 py-1 rounded bg-blue-100">➕ Añadir</button>
+            <button onclick="clearTimers()" class="px-3 py-1 rounded bg-red-100">🗑️ Todos</button>
+          </div>
+        </div>
+        <div id="timersContainer" class="space-y-4"></div>
+        <div id="timerPagination" class="flex justify-center mt-4 space-x-2"></div>
+      </div>
+
+      <!-- Cuentas regresivas -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold">Cuentas Regresivas</h2>
+          <div class="space-x-2">
+            <button onclick="openCountdownModal()" class="px-3 py-1 rounded bg-green-100">➕ Añadir</button>
+            <button onclick="clearCountdowns()" class="px-3 py-1 rounded bg-red-100">🗑️ Todas</button>
+          </div>
+        </div>
+        <div id="countdownsContainer" class="space-y-4"></div>
+        <div id="countdownPagination" class="flex justify-center mt-4 space-x-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal cuenta regresiva -->
+  <div id="countdownModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded shadow-md w-80 space-y-4">
+      <h3 class="text-lg font-semibold">Nueva cuenta regresiva</h3>
+      <div class="grid grid-cols-3 gap-2 text-center">
+        <div>
+          <label class="block text-sm mb-1">Horas</label>
+          <input id="modalHours" type="number" min="0" class="w-full p-1 border rounded text-center">
+        </div>
+        <div>
+          <label class="block text-sm mb-1">Minutos</label>
+          <input id="modalMinutes" type="number" min="0" max="59" class="w-full p-1 border rounded text-center">
+        </div>
+        <div>
+          <label class="block text-sm mb-1">Segundos</label>
+          <input id="modalSeconds" type="number" min="0" max="59" class="w-full p-1 border rounded text-center">
+        </div>
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button onclick="closeCountdownModal()" class="px-3 py-1 rounded bg-gray-100">Cancelar</button>
+        <button onclick="addCountdownFromModal()" class="px-3 py-1 rounded bg-blue-100">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
