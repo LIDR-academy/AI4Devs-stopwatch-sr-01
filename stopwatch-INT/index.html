@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Multi Timer App</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Multi Timer App</h1>
+
+      <div class="add-buttons">
+        <button id="addStopwatch" title="Add Stopwatch">
+          Stopwatch <i class="fa-solid fa-arrow-up"></i>
+        </button>
+        <button id="addCountdown" title="Add Countdown">
+          Countdown <i class="fa-solid fa-arrow-down"></i>
+        </button>
+      </div>
+
+      <section id="timers-container" aria-live="polite"></section>
+    </main>
+
+    <audio
+      id="alertSound"
+      src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"
+      preload="auto"
+    ></audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>
