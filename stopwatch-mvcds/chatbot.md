@@ -6,11 +6,13 @@
 
 # Chatbots
 
-ChatGPT (4o), Copilot (auto)
+ChatGPT (4o), Cursor (auto)
 
 # Problemas
 
 - Even asking ChatGPT for Markdown, it didn't do it initially
+- Asking all at once made Cursor take a looong time
+- Neither timer nor stopwatch worked on the beginning, tho it told me it would be the next steps
 
 # Decisiones
 

@@ -32,6 +32,9 @@ And produce the prompt in markdown
 
 # Resultados Parciales
 
+- The initial markdown didn't generate code
+- WHen it generatd code, it was on the template folder instead of mine
+
 # Refinamentos Aplicaods
 
 # Prompt Final

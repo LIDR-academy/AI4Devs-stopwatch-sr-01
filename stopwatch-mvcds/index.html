@@ -1,13 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Timer and Countdown</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<h1>Timer and Countdown</h1>
-<script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi Stopwatch & Timer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header__title">Multi Stopwatch & Timer</h1>
+      <div class="header__actions">
+        <button
+          class="btn btn--primary"
+          id="addStopwatch"
+          aria-label="Add new stopwatch"
+        >
+          <span class="btn__icon">⏱️</span>
+          Add Stopwatch
+        </button>
+        <button
+          class="btn btn--primary"
+          id="addTimer"
+          aria-label="Add new timer"
+        >
+          <span class="btn__icon">⏲️</span>
+          Add Timer
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="cards-container" id="cardsContainer">
+        <!-- Cards will be dynamically added here -->
+      </div>
+    </main>
+
+    <!-- Template for stopwatch card -->
+    <template id="stopwatchTemplate">
+      <div class="card card--stopwatch" data-type="stopwatch">
+        <div class="card__header">
+          <h2 class="card__title">Stopwatch</h2>
+          <button
+            class="btn btn--icon card__delete"
+            aria-label="Delete stopwatch"
+          >
+            🗑️
+          </button>
+        </div>
+        <div class="card__content">
+          <div class="display">
+            <span class="display__time">00:00:00</span>
+          </div>
+          <div class="controls">
+            <button class="btn btn--control" data-action="start">Start</button>
+            <button class="btn btn--control" data-action="pause">Pause</button>
+            <button class="btn btn--control" data-action="reset">Reset</button>
+            <button class="btn btn--control" data-action="lap">Lap</button>
+          </div>
+          <div class="laps">
+            <h3 class="laps__title">Laps</h3>
+            <ul class="laps__list"></ul>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Template for timer card -->
+    <template id="timerTemplate">
+      <div class="card card--timer" data-type="timer">
+        <div class="card__header">
+          <h2 class="card__title">Timer</h2>
+          <button class="btn btn--icon card__delete" aria-label="Delete timer">
+            🗑️
+          </button>
+        </div>
+        <div class="card__content">
+          <div class="timer-setup">
+            <div class="presets">
+              <button class="btn btn--preset" data-minutes="1">1m</button>
+              <button class="btn btn--preset" data-minutes="5">5m</button>
+              <button class="btn btn--preset" data-minutes="10">10m</button>
+            </div>
+            <div class="custom-time">
+              <input
+                type="number"
+                class="input input--time"
+                min="1"
+                max="60"
+                placeholder="Minutes"
+              />
+              <button class="btn btn--set">Set</button>
+            </div>
+          </div>
+          <div class="display">
+            <span class="display__time">00:00</span>
+          </div>
+          <div class="controls">
+            <button class="btn btn--control" data-action="start">Start</button>
+            <button class="btn btn--control" data-action="pause">Pause</button>
+            <button class="btn btn--control" data-action="reset">Reset</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <script src="script.js" defer></script>
+  </body>
 </html>
