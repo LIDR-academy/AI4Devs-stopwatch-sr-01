@@ -1,0 +1,4 @@
+- ¿**Qué chatbot(s)** usaste? Chatgpt-4o
+- ¿**Qué problemas** encontraste al interactuar con el modelo? Tienes que aclararle activamente que modifique el código que ya ha escrito, si no se dedica a mandar snipets de código y has de perder el tiempo en localizar donde va esa modificación
+- ¿**Qué decisiones**  tuviste que tomar tú como desarrollador para mejorar el código propuesto? Tuve que cambiar una linea de código para reproducir el sonido antes de abrir el alert si no no se reproducia el sonido hasta que el usuario le daba a aceptar
+- ¿**Cómo evaluarías** la utilidad de este flujo de trabajo real? Ha sido muy cómodo, el metaprompting ciertamente me ha ayudado mucho a generar un prompt detallado y eficaz simplemente escribiendole un rol a ChatGPT y pasando un par de imágenes.

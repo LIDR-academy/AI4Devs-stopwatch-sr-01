@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronómetro y Temporizador</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: white;
+    }
+    .hidden {
+      display: none;
+    }
+    .menu, .stopwatch, .timer {
+      margin-top: 50px;
+    }
+    .button {
+      font-size: 2rem;
+      padding: 20px 40px;
+      margin: 10px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .green {
+      background-color: limegreen;
+      color: black;
+    }
+    .red {
+      background-color: red;
+      color: black;
+    }
+    .gray {
+      background-color: lightgray;
+      color: black;
+    }
+    .time-display {
+      font-size: 2.5rem;
+      margin: 10px auto;
+      padding: 10px;
+      background-color: #e6eaff;
+      border-radius: 30px;
+      display: inline-block;
+      border: 3px solid #333;
+    }
+    .instance {
+      margin: 20px;
+      border: 2px solid #ccc;
+      padding: 20px;
+      border-radius: 20px;
+      display: inline-block;
+      background-color: #f5faff;
+      position: relative;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.2rem;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(5, 50px);
+      gap: 5px;
+      justify-content: center;
+      margin: 10px 0;
+    }
+    .keypad button {
+      font-size: 1.5rem;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: limegreen;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu">
+    <button class="button green" onclick="showView('stopwatch')">Cronómetro</button>
+    <button class="button green" onclick="showView('timer')">Temporizador</button>
+  </div>
+
+  <div class="stopwatch hidden">
+    <h2>Cronómetros</h2>
+    <div id="stopwatchContainer"></div>
+    <button class="button green" onclick="addStopwatch()">Añadir Cronómetro</button>
+    <br><br>
+    <button class="button gray" onclick="showView('menu')">Volver</button>
+  </div>
+
+  <div class="timer hidden">
+    <h2>Temporizadores</h2>
+    <div id="timerContainer"></div>
+    <button class="button green" onclick="addTimer()">Añadir Temporizador</button>
+    <br><br>
+    <button class="button gray" onclick="showView('menu')">Volver</button>
+  </div>
+
+  <audio id="alarmSound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
