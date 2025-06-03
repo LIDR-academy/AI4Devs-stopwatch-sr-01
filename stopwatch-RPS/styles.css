@@ -1,0 +1,226 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f8faff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    font-size: 2rem;
+    margin-top: 1.2em;
+    margin-bottom: .6em;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+.controls {
+    margin: 24px 0 20px 0;
+}
+.controls button {
+    font-size: 1.12rem;
+    margin: 0 7px 8px 7px;
+    padding: 13px 25px;
+    border-radius: 16px;
+    border: none;
+    color: #fff;
+    background: #507bfc;
+    cursor: pointer;
+    box-shadow: 0 3px 12px #0001;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.controls button:hover, .controls button:focus {
+    background: #1854f7;
+}
+#timers-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 0 2vw;
+}
+.timer-card {
+    background: #ecefff;
+    border: 6px solid #333;
+    border-radius: 38px;
+    min-width: 425px;
+    max-width: 425px;
+    margin: 0 auto;
+    padding: 28px 18px 30px 18px;
+    box-shadow: 0 5px 18px #0002;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.15s;
+}
+.timer-display {
+    font-family: 'Roboto Mono', 'Consolas', 'Menlo', 'monospace';
+    font-size: 3.2rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    background: #f6f7ff;
+    border-radius: 24px;
+    padding: 13px 28px 13px 28px;
+    margin: 0 auto 13px auto;
+    border: 2.5px solid #d0d3ec;
+    min-width: 390px;
+    max-width: 390px;
+    width: 390px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 5px;
+    height: 1.6em;
+    overflow-x: hidden;
+}
+.timer-main {
+    font-size: 3.2rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    white-space: pre;
+}
+.timer-ms {
+    font-size: 2.0rem;
+    color: #7293e6;
+    margin-left: 10px;
+    white-space: pre;
+    user-select: none;
+}
+.timer-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.timer-actions button {
+    font-size: 1.19rem;
+    margin: 0 2px;
+    padding: 11px 25px;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    min-width: 100px;
+    box-shadow: 0 2px 8px #0001;
+    transition: background 0.15s;
+}
+.timer-actions .start { background: #15c331; }
+.timer-actions .start:hover, .timer-actions .start:focus { background: #009b26; }
+.timer-actions .clear { background: #ff9c08; }
+.timer-actions .clear:hover, .timer-actions .clear:focus { background: #c77900; }
+.timer-actions .delete { background: #444; }
+.timer-actions .delete:hover, .timer-actions .delete:focus { background: #000; }
+.countdown-inputs {
+    margin-bottom: 11px;
+    margin-top: 7px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.countdown-labels {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 4px;
+}
+.countdown-label {
+    font-size: 1rem;
+    color: #557;
+    padding: 0 2px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+.countdown-input-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+}
+.countdown-inputs input[type="number"] {
+    border: 1.5px solid #b0b5d9;
+    border-radius: 7px;
+    text-align: center;
+    padding: 7px 0;
+    width: 45px;
+    font-size: 1.15rem;
+    background: #fff;
+    color: #23243c;
+    font-family: 'Roboto Mono', 'Consolas', 'Menlo', 'monospace';
+    box-shadow: 0 1px 3px #0001;
+    margin: 0 0;
+}
+.countdown-inputs input[type="number"]:focus {
+    border-color: #507bfc;
+    outline: none;
+}
+@media (max-width: 500px) {
+    .timer-card {
+        min-width: 98vw;
+        max-width: 98vw;
+        padding: 16px 2vw 20px 2vw;
+    }
+    .timer-display {
+        min-width: 95vw;
+        max-width: 95vw;
+        width: 95vw;
+        font-size: 1.7rem;
+        padding: 7px 4vw 7px 4vw;
+    }
+    .timer-main {
+        font-size: 1.7rem;
+    }
+    .timer-ms {
+        font-size: 1.1rem;
+        margin-left: 6px;
+    }
+    .countdown-inputs input[type="number"] {
+        font-size: 1.05rem;
+        width: 31px;
+        padding: 4px 0;
+    }
+}
+@media (min-width: 700px) {
+    #timers-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: stretch;
+        gap: 32px;
+        justify-content: center;
+    }
+    .timer-card {
+        min-width: 425px;
+        max-width: 425px;
+        padding: 30px 18px 28px 18px;
+        border-radius: 46px;
+    }
+    .timer-display {
+        font-size: 3.2rem;
+        padding: 13px 28px 13px 28px;
+        min-width: 390px;
+        max-width: 390px;
+        width: 390px;
+        height: 1.6em;
+    }
+    .timer-main {
+        font-size: 3.2rem;
+    }
+    .timer-ms {
+        font-size: 2.0rem;
+        margin-left: 10px;
+    }
+    .timer-actions button {
+        font-size: 1.3rem;
+        min-width: 110px;
+        padding: 13px 30px;
+    }
+    .countdown-inputs input[type="number"] {
+        font-size: 1.36rem;
+        width: 45px;
+        padding: 7px 0;
+    }
+}
