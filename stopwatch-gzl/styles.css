@@ -1,0 +1,337 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.container {
+    text-align: center;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* Pantalla de selección inicial */
+.selection-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.selection-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 2rem;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.selection-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-5px);
+}
+
+.arrow {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.up-arrow {
+    color: #4CAF50;
+}
+
+.down-arrow {
+    color: #FF6B6B;
+}
+
+/* Botón de regreso */
+.back-btn {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Display del tiempo */
+.display {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#stopwatch-time,
+#countdown-time {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Input del countdown */
+.time-input {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    text-align: center;
+    width: 100%;
+    outline: none;
+}
+
+.time-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Botones de control */
+.control-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.control-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.start-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+.start-btn:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+}
+
+.clear-btn {
+    background: #FF6B6B;
+    color: white;
+}
+
+.clear-btn:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+}
+
+/* Teclado numérico */
+.number-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.number-row {
+    display: contents;
+}
+
+.number-row:last-child {
+    grid-column: 2;
+}
+
+.number-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 1rem;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.number-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.number-btn:active {
+    transform: scale(0.95);
+}
+
+/* Botón 0 centrado */
+.number-btn[data-number="0"] {
+    grid-column: 1 / -1;
+    max-width: 80px;
+    margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+        max-width: 350px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .selection-btn {
+        padding: 1.5rem;
+        font-size: 1.2rem;
+    }
+    
+    .arrow {
+        font-size: 2.5rem;
+    }
+    
+    #stopwatch-time,
+    #countdown-time,
+    .time-input {
+        font-size: 2.5rem;
+    }
+    
+    .control-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .number-btn {
+        padding: 0.8rem;
+        font-size: 1.2rem;
+    }
+    
+    .back-btn {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0.5rem;
+        max-width: 300px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .selection-btn {
+        padding: 1rem;
+        font-size: 1rem;
+        gap: 0.5rem;
+    }
+    
+    .arrow {
+        font-size: 2rem;
+    }
+    
+    #stopwatch-time,
+    #countdown-time,
+    .time-input {
+        font-size: 2rem;
+    }
+    
+    .control-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .control-btn {
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .number-pad {
+        gap: 0.5rem;
+        max-width: 200px;
+    }
+    
+    .number-btn {
+        padding: 0.6rem;
+        font-size: 1rem;
+    }
+}
+
+/* Animaciones */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.screen.active {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Estados activos */
+.control-btn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.selection-btn:active {
+    transform: translateY(-2px) scale(0.98);
+}
