@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TimeMaster – Cronómetros y Temporizadores Divertidos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center py-8">
+  <header class="mb-6">
+    <h1 class="text-4xl font-bold text-blue-700 drop-shadow-md text-center">TimeMaster</h1>
+    <p class="text-lg text-gray-600 text-center mt-2">¡Crea hasta 10 cronómetros o cuentas regresivas! ¿Listo para retar al tiempo?</p>
+  </header>
+
+  <section class="w-full max-w-xl bg-white p-6 rounded-2xl shadow-xl mb-8">
+    <form id="add-timer-form" class="flex flex-col md:flex-row gap-4 items-center flex-wrap w-full">
+      <input name="name" type="text" placeholder="Nombre (opcional)" class="flex-1 px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg" maxlength="24">
+      
+      <select name="type" class="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg">
+        <option value="stopwatch">Cronómetro</option>
+        <option value="countdown">Cuenta regresiva</option>
+      </select>
+      
+      <div id="duration-fields" class="flex gap-1 items-center hidden w-full md:w-auto">
+        <input name="hours" type="number" min="0" max="99" placeholder="HH" class="w-14 px-2 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg" />
+        <span class="font-bold text-lg">:</span>
+        <input name="minutes" type="number" min="0" max="59" placeholder="MM" class="w-14 px-2 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg" />
+        <span class="font-bold text-lg">:</span>
+        <input name="seconds" type="number" min="0" max="59" placeholder="SS" class="w-14 px-2 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg" />
+      </div>
+      
+      <button type="submit" class="px-6 py-2 rounded-xl bg-blue-600 text-white font-bold text-lg shadow hover:bg-blue-700 transition-all">
+        +
+      </button>
+    </form>
+  </section>
+
+  <main id="timers-list" class="grid gap-6 w-full max-w-4xl px-2 md:grid-cols-2"></main>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-8 z-50 hidden bg-green-600 text-white text-lg px-6 py-3 rounded-xl shadow-2xl font-bold flex items-center gap-3">
+    <span id="toast-msg"></span>
+    <button onclick="document.getElementById('toast').classList.add('hidden')" aria-label="Cerrar" class="ml-3 text-white font-black">&times;</button>
+  </div>
+
+  <audio id="beep-audio"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
