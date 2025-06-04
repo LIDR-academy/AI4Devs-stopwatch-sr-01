@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch & Timer - Motivational Time Keeper</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="app-wrapper">
+            <!-- Home Page -->
+            <div id="home-page" class="page active">
+                <div class="header">
+                    <h1 class="app-title">Time Keeper</h1>
+                    <p class="app-subtitle">Push Your Limits</p>
+                </div>
+                
+                <div class="main-buttons">
+                    <button id="stopwatch-btn" class="main-btn">
+                        <div class="btn-icon">⏱️</div>
+                        <span>Stopwatch</span>
+                        <div class="btn-subtitle">Track Your Progress</div>
+                    </button>
+                    
+                    <button id="timer-btn" class="main-btn">
+                        <div class="btn-icon">⏰</div>
+                        <span>Timer</span>
+                        <div class="btn-subtitle">Challenge Yourself</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stopwatch Page -->
+            <div id="stopwatch-page" class="page">
+                <div class="page-header">
+                    <button id="back-from-stopwatch" class="back-btn">← Back</button>
+                    <h2>Stopwatch</h2>
+                </div>
+                
+                <div class="time-display">
+                    <div id="stopwatch-display" class="display">00:00:00</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="stopwatch-start" class="control-btn primary">Start</button>
+                    <button id="stopwatch-clear" class="control-btn secondary">Clear</button>
+                </div>
+            </div>
+
+            <!-- Timer Page -->
+            <div id="timer-page" class="page">
+                <div class="page-header">
+                    <button id="back-from-timer" class="back-btn">← Back</button>
+                    <h2>Timer</h2>
+                </div>
+                
+                <div class="time-display">
+                    <div id="timer-display" class="display">00:00:00</div>
+                </div>
+                
+                <!-- Timer Input Section -->
+                <div id="timer-input-section" class="timer-input-section">
+                    <div class="time-inputs">
+                        <div class="input-group">
+                            <label>Hours</label>
+                            <input type="number" id="hours-input" min="0" max="23" value="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Minutes</label>
+                            <input type="number" id="minutes-input" min="0" max="59" value="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Seconds</label>
+                            <input type="number" id="seconds-input" min="0" max="59" value="0">
+                        </div>
+                    </div>
+                    
+                    <button id="timer-set" class="control-btn primary">Set Timer</button>
+                </div>
+                
+                <!-- Timer Controls Section -->
+                <div id="timer-controls-section" class="controls" style="display: none;">
+                    <button id="timer-start" class="control-btn primary">Start</button>
+                    <button id="timer-clear" class="control-btn secondary">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="timer-sound" preload="auto">
+        <source src="assets/sounds/fart.mp3" type="audio/mpeg">
+    </audio>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
