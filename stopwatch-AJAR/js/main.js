@@ -11,21 +11,19 @@ window.MILLISECONDS_INTERVAL = 50;
 // 2) Crear o referenciar el Map global donde se almacenan las instancias
 window.timersMap = new Map();
 
+// 3) Declarar globales para el modal de confirmación de eliminación
+window.pendingDeleteTimer = null;
+window.confirmDeleteNameSpan = document.getElementById('confirm-delete-name');
+window.bsModalConfirmDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
+
 // Lleva un conteo de cuántos timers (para asignar IDs únicos)
   window.nextTimerId = 1;   // Nota: lo hacemos global para que TimerFactory lo use
 
+// -----------------------------------------------------
+//  Resto de main.js (sin cambios más allá de lo necesitado)
+// -----------------------------------------------------
 (() => {
-  // ------------------------------
-  //  CONSTANTES GLOBALES y referencias a DOM
-  // ------------------------------
   const MAX_TIMERS = 20;
-
-  // Modal de Confirmación de Eliminación
-  let pendingDeleteTimer = null;
-  const modalConfirmDeleteEl = document.getElementById('modalConfirmDelete');
-  const confirmDeleteNameSpan = document.getElementById('confirm-delete-name');
-  const btnConfirmDelete = document.getElementById('btn-confirm-delete');
-  const bsModalConfirmDelete = new bootstrap.Modal(modalConfirmDeleteEl);
 
   document.addEventListener('DOMContentLoaded', () => {
     try {
@@ -40,12 +38,14 @@ window.timersMap = new Map();
    * Inicializa el modal de Confirmación de Eliminación.
    */
   function _initDeleteModal() {
+    // Aquí usamos window.btnConfirmDelete, definido globalmente en el HTML
+    const btnConfirmDelete = document.getElementById('btn-confirm-delete');
     btnConfirmDelete.addEventListener('click', () => {
-      if (pendingDeleteTimer) {
-        pendingDeleteTimer._performDelete();
-        pendingDeleteTimer = null;
+      if (window.pendingDeleteTimer) {
+        window.pendingDeleteTimer._performDelete();
+        window.pendingDeleteTimer = null;
       }
-      bsModalConfirmDelete.hide();
+      window.bsModalConfirmDelete.hide();
     });
   }
 

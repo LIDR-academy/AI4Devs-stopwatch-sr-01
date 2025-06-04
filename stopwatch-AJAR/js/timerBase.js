@@ -121,7 +121,7 @@ class TimerBase {
       // 1) Insertamos la columna en el contenedor global
       timersContainer.appendChild(col);
 
-      // 2) Observamos la tarjeta con IntersectionObserver global
+      // 2) Observamos la tarjeta con el IntersectionObserver global
       window.timerObserver.observe(card);
 
       // 3) Guardamos referencia a la card
@@ -157,10 +157,13 @@ class TimerBase {
       }
     });
 
-    // Eliminar (abre modal de confirmación)
+    // Eliminar (usa las variables globales para el modal)
     this.btnDelete.addEventListener('click', () => {
       try {
-        this._handleDelete();
+        // Asignamos en el global y abrimos el modal
+        window.pendingDeleteTimer = this;
+        window.confirmDeleteNameSpan.textContent = this.name;
+        window.bsModalConfirmDelete.show();
       } catch (err) {
         console.error(`[Timer ${this.id}] Error en Eliminar:`, err);
       }
@@ -223,15 +226,6 @@ class TimerBase {
   _updateCardStyle() {
     this.cardElement.classList.remove('stopped', 'running', 'paused', 'finished');
     this.cardElement.classList.add(this.state);
-  }
-
-  /**
-   * Abre el modal de confirmación para eliminar este temporizador.
-   */
-  _handleDelete() {
-    pendingDeleteTimer = this;
-    confirmDeleteNameSpan.textContent = this.name;
-    bsModalConfirmDelete.show();
   }
 
   /**
