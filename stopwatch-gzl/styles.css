@@ -368,7 +368,7 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Stopwatch - Up Arrow - Diseño PLANO Y SÓLIDO */
+/* Stopwatch - Up Arrow - Diseño PLANO, SÓLIDO Y LIGERAMENTE REDONDEADO */
 #home-screen.active .stopwatch-arrow {
     position: relative;
     width: 0;
@@ -379,6 +379,8 @@ h1 {
     border-top: none;
     /* Contorno negro sólido */
     filter: drop-shadow(0 0 0 8px #000000);
+    /* Bordes ligeramente redondeados */
+    border-radius: 25px;
     transition: all 0.2s ease;
 }
 
@@ -388,7 +390,7 @@ h1 {
     display: none;
 }
 
-/* Countdown - Down Arrow - Diseño PLANO Y SÓLIDO */
+/* Countdown - Down Arrow - Diseño PLANO, SÓLIDO Y LIGERAMENTE REDONDEADO */
 #home-screen.active .countdown-arrow {
     position: relative;
     width: 0;
@@ -399,6 +401,8 @@ h1 {
     border-bottom: none;
     /* Contorno negro sólido */
     filter: drop-shadow(0 0 0 8px #000000);
+    /* Bordes ligeramente redondeados */
+    border-radius: 25px;
     transition: all 0.2s ease;
 }
 
@@ -425,12 +429,13 @@ h1 {
         margin-bottom: 30px;
     }
 
-    /* Flechas más pequeñas - diseño simple */
+    /* Flechas más pequeñas - diseño simple redondeado */
     #home-screen.active .stopwatch-arrow {
         border-left-width: 60px;
         border-right-width: 60px;
         border-bottom-width: 150px;
         filter: drop-shadow(0 0 0 6px #000000);
+        border-radius: 22px;
     }
 
     #home-screen.active .countdown-arrow {
@@ -438,6 +443,7 @@ h1 {
         border-right-width: 60px;
         border-top-width: 150px;
         filter: drop-shadow(0 0 0 6px #000000);
+        border-radius: 22px;
     }
 }
 
@@ -452,12 +458,13 @@ h1 {
         margin-bottom: 25px;
     }
 
-    /* Flechas aún más pequeñas para móviles - diseño simple */
+    /* Flechas aún más pequeñas para móviles - diseño simple redondeado */
     #home-screen.active .stopwatch-arrow {
         border-left-width: 50px;
         border-right-width: 50px;
         border-bottom-width: 120px;
         filter: drop-shadow(0 0 0 5px #000000);
+        border-radius: 20px;
     }
 
     #home-screen.active .countdown-arrow {
@@ -465,6 +472,7 @@ h1 {
         border-right-width: 50px;
         border-top-width: 120px;
         filter: drop-shadow(0 0 0 5px #000000);
+        border-radius: 20px;
     }
 }
 
