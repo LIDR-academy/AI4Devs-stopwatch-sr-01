@@ -126,9 +126,15 @@
     Aplicar este cambio en los JS correspondientes
 
 
-- **Decimocuarti prompt**
+- **Decimocuarto prompt**
 
     incluye el script del observer en un archivo JS separado y no dentro del index.html
+
+- **Decimoquinto prompt**
+
+    Al intentar borrar un temporizador me arroja el siguiente error en consola: [Timer 6] Error en Eliminar: ReferenceError: pendingDeleteTimer is not defined
+    at StopwatchTimer._handleDelete (timerBase.js:232:24)
+    at HTMLButtonElement.<anonymous> (timerBase.js:163:14)
 
 
 # Justificación
