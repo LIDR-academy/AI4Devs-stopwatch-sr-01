@@ -1,4 +1,4 @@
-# PROMPT inicial, le he dado de contexto de archivos el index.html y la imagen stopwatch.png, y le he dado el siguiente PROMPT, elegí la estrategía de que me preguntará lo que no tuviera claro para limitar su respuesta y no diera cabida a ambiguedades, con sus preguntas pude refinar aún más los requerimientos y lograr a la primera un MVP de la aplicación que aúnque no era del todo como la imaginaba (un clon de online-stopwatch.com), me terminó sorprendiendo y hasta gustandome más, claro todo muy a lo bootstrap por que se lo he pedido de esa manera.
+PROMPT inicial, le he dado de contexto de archivos el index.html y la imagen stopwatch.png, y le he dado el siguiente PROMPT, elegí la estrategía de que me preguntará lo que no tuviera claro para limitar su respuesta y no diera cabida a ambiguedades, con sus preguntas pude refinar aún más los requerimientos y lograr a la primera un MVP de la aplicación que aúnque no era del todo como la imaginaba (un clon de online-stopwatch.com), me terminó sorprendiendo y hasta gustandome más, claro todo muy a lo bootstrap por que se lo he pedido de esa manera.
 
 ```
 # Rol
