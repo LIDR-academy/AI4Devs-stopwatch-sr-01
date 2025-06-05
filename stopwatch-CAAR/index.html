@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cronómetros</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Cronómetros</h1>
+    <section class="timers">
+      <div class="timer-section">
+        <h2>Cronómetro Hacia Adelante</h2>
+        <button id="start-forward">Iniciar</button>
+        <ul id="forward-list" aria-label="Lista de cronómetros hacia adelante"></ul>
+      </div>
+      <div class="timer-section">
+        <h2>Cronómetro de Cuenta Regresiva</h2>
+        <div class="time-selectors">
+          <select id="hours"><option value="0">00</option></select>
+          <select id="minutes"><option value="0">00</option></select>
+          <select id="seconds"><option value="0">00</option></select>
+        </div>
+        <button id="start-countdown">Iniciar</button>
+        <ul id="countdown-list" aria-label="Lista de cuentas regresivas"></ul>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" role="alertdialog" aria-modal="true" hidden>
+    <div class="modal-content">
+      <p id="modal-message"></p>
+      <button id="close-modal">Cerrar</button>
+    </div>
+  </div>
+
+  <audio id="alert-sound" loop>
+    <source src="beep.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
