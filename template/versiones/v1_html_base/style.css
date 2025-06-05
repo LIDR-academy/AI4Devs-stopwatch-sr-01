@@ -1,0 +1,98 @@
+body {
+    background: #fafaff;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 95vw;
+    max-width: 700px;
+    text-align: center;
+}
+
+.display {
+    background: #eaefff;
+    border: 6px solid #333;
+    border-radius: 30px;
+    font-size: 3rem;
+    color: #111;
+    margin: 20px auto 20px auto;
+    padding: 10px 20px;
+    width: 90%;
+    max-width: 650px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.display .ms {
+    font-size: 1.2rem;
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.btn {
+    font-size: 1.5rem;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 2px 4px 10px #0002;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn.start {
+    background: linear-gradient(180deg, #00ff44 0%, #00c800 100%);
+    color: #111;
+}
+
+.btn.clear {
+    background: linear-gradient(180deg, #ff0000 0%, #c80000 100%);
+    color: #fff;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.countdown-section {
+    margin-top: 30px;
+}
+
+.countdown-section input[type="number"] {
+    font-size: 1.2rem;
+    width: 60px;
+    padding: 6px;
+    margin: 0 5px;
+    border-radius: 6px;
+    border: 2px solid #bbb;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .display {
+        font-size: 7vw;
+        padding: 6px 6px;
+    }
+    .btn {
+        font-size: 4vw;
+        padding: 10px 5px;
+    }
+    .countdown-section input[type="number"] {
+        font-size: 4vw;
+        width: 40px;
+    }
+} 
