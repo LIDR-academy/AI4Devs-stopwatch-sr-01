@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopWatch MAMR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 1.5s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 font-inter min-h-screen">
+    <div id="app" class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">StopWatch MAMR</h1>
+                    <div class="flex space-x-2">
+                        <button id="stopwatch-tab" class="px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            ⏱️ Stopwatch
+                        </button>
+                        <button id="countdown-tab" class="px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                            ⏲️ Timer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Add New Timer Button -->
+            <div class="mb-6 flex justify-between items-center">
+                <h2 id="mode-title" class="text-xl font-semibold text-gray-900 dark:text-white">Active Stopwatches</h2>
+                <button id="add-timer" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+                    ➕ Add New
+                </button>
+            </div>
+
+            <!-- Timers Container -->
+            <div id="timers-container" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="text-center py-12">
+                <div class="text-6xl mb-4">⏰</div>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No timers yet</h3>
+                <p class="text-gray-500 dark:text-gray-400 mb-4">Create your first timer to get started</p>
+                <button id="add-first-timer" class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+                    Create Timer
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="flex justify-between items-center">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">StopWatch MAMR - Professional Time Management</p>
+                    <button id="settings-btn" class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200">
+                        ⚙️
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Timer Configuration Modal -->
+    <div id="timer-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center">
+                    <h3 id="modal-title" class="text-lg font-semibold text-gray-900 dark:text-white">New Stopwatch</h3>
+                    <button id="close-modal" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        ✕
+                    </button>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4">
+                <div class="space-y-4">
+                    <div>
+                        <label for="timer-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Timer Name</label>
+                        <input type="text" id="timer-name" placeholder="Enter timer name..." class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
+                    </div>
+                    
+                    <div id="countdown-settings" class="hidden space-y-4">
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="hours" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Hours</label>
+                                <input type="number" id="hours" min="0" max="23" value="0" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-center">
+                            </div>
+                            <div>
+                                <label for="minutes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Minutes</label>
+                                <input type="number" id="minutes" min="0" max="59" value="5" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-center">
+                            </div>
+                            <div>
+                                <label for="seconds" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Seconds</label>
+                                <input type="number" id="seconds" min="0" max="59" value="0" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-center">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+                <button id="cancel-timer" class="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
+                    Cancel
+                </button>
+                <button id="create-timer" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Settings</h3>
+                    <button id="close-settings" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        ✕
+                    </button>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 space-y-6">
+                <div>
+                    <label for="volume-control" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Sound Volume
+                    </label>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-sm text-gray-500">🔇</span>
+                        <input type="range" id="volume-control" min="0" max="1" step="0.1" value="0.7" class="flex-1">
+                        <span class="text-sm text-gray-500">🔊</span>
+                    </div>
+                    <span id="volume-value" class="text-xs text-gray-500 dark:text-gray-400">70%</span>
+                </div>
+                
+                <div>
+                    <label class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Auto-restart Countdown</span>
+                        <input type="checkbox" id="auto-restart" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    </label>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Automatically restart countdown timers when they finish</p>
+                </div>
+                
+                <div>
+                    <label for="theme-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Theme</label>
+                    <select id="theme-select" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
+                        <option value="light">☀️ Light</option>
+                        <option value="dark">🌙 Dark</option>
+                        <option value="auto">🔄 Auto</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+                <button id="test-sound" class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
+                    🔊 Test Sound
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="alert-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEbBjiS1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEbBjiS1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEbBziS1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEbBjiS1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEbBjiS1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmE=" type="audio/wav">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
